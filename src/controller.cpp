@@ -134,12 +134,12 @@ void Controller::sendMessage(QString &str)
     QUrl apiUrl("https://api.openai.com/v1/chat/completions");
       QNetworkRequest request(apiUrl);
       request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-      request.setRawHeader("Authorization", QString::fromStdString("Bearer %1").arg("").toUtf8());
+      request.setRawHeader("Authorization", QString::fromStdString("Bearer %1").arg(_apiKey).toUtf8());
       request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork); // Events shouldn't be cached
 
       QJsonObject requestData;
       QJsonArray messages;
-      requestData.insert("model", "gpt-3.5-turbo");
+      requestData.insert("model", _model);
       requestData.insert("stream", true);
       qDebug() << _transToLang;
       QString systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.").arg(_transToLang);

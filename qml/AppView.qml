@@ -5,6 +5,10 @@ import Controller
 Item {
 
     signal settingClicked;
+    function startTrans(){
+        transBtn.clicked()
+    }
+
     Item{
         id:header
         anchors.top: parent.top
@@ -159,9 +163,9 @@ Item {
             result.text = responseData
         }
         onResponseErrorChanged: {
-            if(responseError != ""){
-                result.text = responseError + ":\n" + result.text
-            }
+//            if(responseError != ""){
+//                result.text = responseError + ":\n" + result.text
+//            }
         }
         onIsRequestingChanged: {
             if(isRequesting){
@@ -171,6 +175,20 @@ Item {
                 transBtn.visible = true
                 stopBtn.visible = false
             }
+        }
+        Component.onCompleted: {
+            api.apiKey = setting.apiKey
+            api.model = setting.model
+        }
+    }
+    Connections{
+        target: setting
+        function onApiKeyChanged(){
+            console.log( setting.apiKey)
+            api.apiKey = setting.apiKey
+        }
+        function onModelChanged(){
+            api.model = setting.model
         }
     }
 }

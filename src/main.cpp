@@ -11,7 +11,7 @@
 #include <QTranslator>
 
 #include "controller.h"
-
+#include <QIcon>
 int main(int argc, char *argv[])
 {
 

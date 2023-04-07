@@ -13,6 +13,7 @@ Window {
     width: 500
     height: 600
     title: qsTr("GPT Translator")
+
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
     Item{
         anchors.fill: parent
@@ -21,14 +22,15 @@ Window {
            if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_R ||
                    (event.modifiers & Qt.MetaModifier) && event.key === Qt.Key_R) {
                   // Command+R or Ctrl+R pressed
-                  transBtn.clicked()
+
+                appView.startTrans()
               }
         }
 
         SystemTrayIcon {
             id: trayIcon
             visible:true
-            icon.source: "icon.png"
+            icon.source: "qrc:///res/language-solid.svg"
             // create menu for status bar
 
             menu: Menu {
@@ -54,6 +56,7 @@ Window {
             orientation: Qt.Horizontal
             interactive: false
             AppView{
+                id:appView
                 onSettingClicked: {
                     settingView.reload()
                     swipeView.currentIndex = 1

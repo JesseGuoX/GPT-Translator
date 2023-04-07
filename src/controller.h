@@ -46,11 +46,14 @@ class Controller : public QObject
     Q_PROPERTY_AUTO(QString,responseError);
     Q_PROPERTY_AUTO(QString,transToLang);
     Q_PROPERTY_AUTO(bool,isRequesting);
+    Q_PROPERTY_AUTO(QString,apiKey);
+    Q_PROPERTY_AUTO(QString,model);
+
 
 public:
     explicit Controller(QObject *parent = nullptr);
 
-    Q_INVOKABLE  void sendMessage(QString &str);
+    Q_INVOKABLE void sendMessage(QString &str);
     Q_INVOKABLE void abort();
 
 signals:

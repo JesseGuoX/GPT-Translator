@@ -8,7 +8,7 @@ Item {
         keyInput.text = setting.apiKey
         if(setting.model == "gpt-3.5-turbo")
             modelSelector.currentIndex = 0
-        else
+        else if(setting.model == "gpt-4")
             modelSelector.currentIndex = 1
         
         saveBtn.visible = false

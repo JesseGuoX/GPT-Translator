@@ -27,8 +27,8 @@ jobs:
             msvc_arch: x64
             qt_arch_install: msvc2019_64          
     env:
-      targetName: example.exe
-      fileName: example
+      targetName: GPT_Translator.exe
+      fileName: GPT_Translator
     # 步骤
     steps:
       - name: '⚙️ Cache Qt'

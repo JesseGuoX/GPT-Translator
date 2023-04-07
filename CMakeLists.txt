@@ -31,30 +31,30 @@ set(RESOURCES
 )
 
 
-qt_add_executable(appGPT_Translator
+qt_add_executable(GPT_Translator
    ${SOURCES} ${HEADERS} ${RESOURCES}
 )
 
 include_directories("src")
 
-qt_add_qml_module(appGPT_Translator
+qt_add_qml_module(GPT_Translator
     URI GPT_Translator
     VERSION 1.0
 #    QML_FILES qml/main.qml qml/GMenu.qml
 )
 
-set_target_properties(appGPT_Translator PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+set_target_properties(GPT_Translator PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER tinyx.me
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appGPT_Translator
+target_link_libraries(GPT_Translator
     PRIVATE Qt6::Quick)
 
-#target_link_libraries(appGPT_Translator PRIVATE
+#target_link_libraries(GPT_Translator PRIVATE
 #    Qt6::Core
 #    Qt6::Quick
 #    Qt6::QuickControls2
@@ -62,6 +62,6 @@ target_link_libraries(appGPT_Translator
 #    Qt6::Network
 #)
 
-install(TARGETS appGPT_Translator
+install(TARGETS GPT_Translator
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
