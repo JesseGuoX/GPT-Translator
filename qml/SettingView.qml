@@ -19,23 +19,35 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right:parent.right
-        anchors.margins: 10
+        anchors.margins: 15
         height:50
 
-        Button{
+
+        IconButton{
+            width: 20
+            height:20
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            text:"Main"
+            anchors.top: parent.top
+            normalUrl:"qrc:///res/back.svg"
+            hoveredUrl:"qrc:///res/back.svg"
+            pressedUrl:"qrc:///res/back.svg"
             onClicked: {
                 backClicked();
             }
         }
-        Button{
+
+
+
+        IconButton{
             id:saveBtn
+            width: 17.5
+            height:20
             visible:false
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            text:"Save"
+            anchors.top: parent.top
+            normalUrl:"qrc:///res/save.svg"
+            hoveredUrl:"qrc:///res/save.svg"
+            pressedUrl:"qrc:///res/save.svg"
             onClicked: {
                 setting.apiKey = keyInput.text
                 if(modelSelector.currentIndex == 0)

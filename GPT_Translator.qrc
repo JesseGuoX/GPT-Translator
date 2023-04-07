@@ -6,5 +6,9 @@
         <file>qml/SettingView.qml</file>
         <file>qml/AppView.qml</file>
         <file>res/language-solid.svg</file>
+        <file>qml/IconButton.qml</file>
+        <file>res/setting.svg</file>
+        <file>res/back.svg</file>
+        <file>res/save.svg</file>
     </qresource>
 </RCC>

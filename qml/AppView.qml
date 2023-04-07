@@ -14,7 +14,8 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right:parent.right
-        anchors.margins: 10
+        anchors.margins: 15
+
         height:50
         RowLayout {
             RadioButton {
@@ -27,10 +28,15 @@ Item {
 
         }
 
-        Button{
+
+        IconButton{
+            width: 18
+            height:18
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            text:"setting"
+            anchors.top: parent.top
+            normalUrl:"qrc:///res/setting.svg"
+            hoveredUrl:"qrc:///res/setting.svg"
+            pressedUrl:"qrc:///res/setting.svg"
             onClicked: {
                 settingClicked();
             }
