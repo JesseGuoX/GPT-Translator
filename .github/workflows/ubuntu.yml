@@ -1,0 +1,77 @@
+name: Ubuntu
+# Qt官方没有linux平台的x86包
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '*.pro'
+      - 'src/**'
+      - '.github/workflows/ubuntu.yml'
+  pull_request:
+    paths:
+      - '*.pro'
+      - 'src/**'
+      - '.github/workflows/ubuntu.yml' 
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04]
+        qt_ver: [6.4.3]
+        qt_arch: [gcc_64]
+    env:
+      targetName: example
+    steps:
+      - name: '⚙️ Cache Qt'
+        id: cache-qt
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.workspace }}/Qt
+          key: ${{runner.os}}-qtcachedir-${{ matrix.qt_ver }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ matrix.qt_ver }}
+          cache: ${{steps.cache-qt.outputs.cache-hit}}
+          arch: ${{ matrix.qt_arch }}
+          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats'
+      - name: ubuntu install GL library
+        run: sudo apt-get install -y libglew-dev libglfw3-dev qml-module-qtquick-controls qml-module-qtquick-controls2
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: build ubuntu
+        run: |
+          qmake
+          make
+      - name: install QT linux deploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
+      - name: Check if svg file exists
+        run: if [ ! -f "${targetName}.svg" ]; then echo "File not found, creating..."; touch ${targetName}.svg; fi
+      # 打包
+      - name: package
+        run: |
+          # make sure Qt plugin finds QML sources so it can deploy the imported files
+          export QML_SOURCES_PATHS=src
+          # 拷贝依赖
+          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${targetName}.svg --executable=bin/release/${targetName} --appdir bin/release/
+          mv ${{ env.targetName }}-*.AppImage ${{ env.targetName }}.AppImage
+      # 上传artifacts          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.targetName }}_${{ matrix.os }}_${{matrix.qt_ver}}
+          path: ${{ env.targetName }}.AppImage
+      # tag 上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.targetName }}.AppImage
+          asset_name: ${{ env.targetName }}_${{  github.ref_name }}_${{ matrix.os }}_Qt${{ matrix.qt_ver }}.AppImage
+          tag: ${{ github.ref }}
+          overwrite: true

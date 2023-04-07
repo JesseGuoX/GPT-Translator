@@ -1,0 +1,64 @@
+name: MacOS
+on: 
+  push:
+    paths:
+      - '*.pro'
+      - 'src/**'
+      - '.github/workflows/macos.yml'
+  pull_request:
+    paths:
+      - '*.pro'
+      - 'src/**'
+      - '.github/workflows/macos.yml' 
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-12]
+        qt_ver: [6.4.3]
+        qt_arch: [clang_64]
+    env:
+      targetName: example
+    steps:
+      - name: '⚙️ Cache Qt'
+        id: cache-qt
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.workspace }}/Qt
+          key: ${{runner.os}}-qtcachedir-${{ matrix.qt_ver }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ matrix.qt_ver }}
+          cache: ${{steps.cache-qt.outputs.cache-hit}}
+          arch: ${{ matrix.qt_arch }}
+          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: build macos
+        run: |
+          qmake
+          make
+      # 打包
+      - name: package
+        run: |
+          # 拷贝依赖
+          macdeployqt bin/release/${targetName}.app -qmldir=. -verbose=1 -dmg
+      # 上传artifacts          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.targetName }}_${{ matrix.os }}_${{matrix.qt_ver}}.zip
+          path: bin/release/${{ env.targetName }}.app
+      # tag 上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: bin/release/${{ env.targetName }}.dmg
+          asset_name: ${{ env.targetName }}_${{  github.ref_name }}_${{ matrix.os }}_Qt${{ matrix.qt_ver }}.dmg
+          tag: ${{ github.ref }}
+          overwrite: true

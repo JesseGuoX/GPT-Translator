@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>qml/GRadioButton.qml</file>
+        <file>qml/SettingView.qml</file>
+        <file>qml/AppView.qml</file>
+    </qresource>
+</RCC>
