@@ -11,5 +11,6 @@
         <file>res/back.svg</file>
         <file>res/save.svg</file>
         <file>res/thumbtack.svg</file>
+        <file>res/speaker.svg</file>
     </qresource>
 </RCC>

@@ -128,7 +128,8 @@ void Controller::streamReceived()
 
 }
 
-void Controller::sendMessage(QString str)
+
+void Controller::sendMessage(QString str, int mode)
 {
 
     QUrl apiUrl("https://api.openai.com/v1/chat/completions");
@@ -142,9 +143,18 @@ void Controller::sendMessage(QString str)
       requestData.insert("model", _model);
       requestData.insert("stream", true);
       qDebug() << _transToLang;
-      QString systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.").arg(_transToLang);
-      messages.append(createMessage("system",systemcmd));
-      messages.append(createMessage("user",str));
+      QString systemcmd;
+      if(mode == 0){
+        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.").arg(_transToLang);
+        messages.append(createMessage("system",systemcmd));
+        messages.append(createMessage("user",str));
+      }else{
+        systemcmd = QString::fromStdString("I want you to strictly correct my grammar mistakes, typos, and factual errors.Only correct sentence in the brackets.").arg(_transToLang);
+        messages.append(createMessage("system",systemcmd));
+        messages.append(createMessage("user", " The sentence is: ["+ str + "]"));
+      }
+
+
 
       requestData.insert("messages", messages);
       QJsonDocument requestDoc(requestData);

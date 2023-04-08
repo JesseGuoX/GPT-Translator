@@ -12,12 +12,35 @@ Item {
         transBtn.clicked()
     }
 
-    TextToSpeech {
-            id: tts
-            volume: 0.5
-            pitch: 0
-            rate: 0
+    function getMode(){
+        if(transRadio.checked){
+            return 0
+        }
+        if(grammerRadio.checked){
+            return 1
+        }
     }
+
+    function speekDisplay(){
+        if(getMode() == 0){
+            if((result.text.length > 0) && (langSelector.currentText === "English")){
+                return true
+            }
+        }else{
+            if((result.text.length > 0)){
+                return true
+            }
+        }
+        return false
+    }
+
+    TextToSpeech {
+        id: tts
+        volume: 1
+        pitch: 0
+        rate: 0
+    }
+
 
     Item{
         id:header
@@ -29,11 +52,29 @@ Item {
         height:50
         RowLayout {
             RadioButton {
+                id:transRadio
                 checked: true
                 text: qsTr("Translation")
+                onCheckedChanged: {
+                    if(checked){
+                        indictor.text = "Translated"
+                        transBtn.text = (Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Translate ⌘R":"Translate ^R"
+                        langSelector.visible = true
+                    }
+                    result.text = ""
+                }
             }
             RadioButton {
-                text: qsTr("Dictionary")
+                id:grammerRadio
+                text: qsTr("Grammar")
+                onCheckedChanged: {
+                    if(checked){
+                        indictor.text = "Grammar fixed"
+                        transBtn.text = (Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Fix ⌘R":"Fix ^R"
+                        langSelector.visible = false
+                    }
+                    result.text = ""
+                }
             }
 
         }
@@ -63,7 +104,6 @@ Item {
             pressedUrl:"qrc:///res/thumbtack.svg"
             state:"0"
             onClicked: {
-                tts.say(result.text)
                 if(state == "0"){
                     state = "1"
                     mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
@@ -123,6 +163,7 @@ Item {
 
     }
 
+
     Text{
         id:indictor
         text:"Translated"
@@ -133,6 +174,22 @@ Item {
         anchors.topMargin: 30
 
     }
+
+    IconButton{
+        id:speakerBtn
+        width: 18
+        height:18
+        anchors.verticalCenter: indictor.verticalCenter
+        anchors.right: inputScroll.right
+        normalUrl:"qrc:///res/speaker.svg"
+        hoveredUrl:"qrc:///res/speaker.svg"
+        pressedUrl:"qrc:///res/speaker.svg"
+        visible:speekDisplay()
+        onClicked: {
+            tts.say(result.text)
+        }
+    }
+
 
     ScrollView {
         id: resultScroll
@@ -176,9 +233,10 @@ Item {
         anchors.right:parent.right
         anchors.margins:10
         text:(Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Translate ⌘R":"Translate ^R"
+        font.capitalization: Font.MixedCase
         enabled:inputArea.length > 0
         onClicked: {
-            api.sendMessage(inputArea.text)
+            api.sendMessage(inputArea.text, grammerRadio.checked?1:0)
         }
         height:50
 
