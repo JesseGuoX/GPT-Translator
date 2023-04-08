@@ -145,7 +145,14 @@ void Controller::sendMessage(QString str, int mode)
       qDebug() << _transToLang;
       QString systemcmd;
       if(mode == 0){
-        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.").arg(_transToLang);
+        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.When the text contains only one word, please provide the original form (if applicable), \
+the language of the word, the corresponding phonetic transcription (if applicable), \
+all meanings (including parts of speech), and at least three bilingual examples. Please strictly follow the format below:\
+                                           <Original Text> \
+                                           [<Language>] · / <Phonetic Transcription>\
+                                           [<Part of Speech Abbreviation>] <Chinese Meaning>]\
+                                           Examples:\
+                                           <Number><Example>(Example Translation).The content in this format must be %1 either").arg(_transToLang);
         messages.append(createMessage("system",systemcmd));
         messages.append(createMessage("user",str));
       }else{
