@@ -239,6 +239,8 @@ Item {
             api.sendMessage(inputArea.text, grammerRadio.checked?1:0)
         }
         height:50
+        Material.background: Material.Green
+        Material.foreground :"white"
 
     }
     BusyIndicator {

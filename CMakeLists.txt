@@ -21,10 +21,12 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui TextToSpeech Widgets)
 set(HEADERS
     src/controller.h
     src/stdafx.h
+    src/updater.h
 )
 set(SOURCES
     "src/main.cpp"
     "src/controller.cpp"
+    "src/updater.cpp"
 )
 
 set(RESOURCES

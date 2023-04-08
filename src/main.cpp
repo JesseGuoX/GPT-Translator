@@ -11,6 +11,7 @@
 #include <QTranslator>
 
 #include "controller.h"
+#include "updater.h"
 #include <QIcon>
 int main(int argc, char *argv[])
 {
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
     Setting * setting = new Setting();
 
     qmlRegisterType<Controller>("Controller",1,0,"APIController");
+    qmlRegisterType<Updater>("Updater",1,0,"APIUpdater");
 
 
     QQmlApplicationEngine engine;

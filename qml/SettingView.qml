@@ -1,5 +1,8 @@
 import QtQuick
 import QtQuick.Controls
+import Updater
+import Controller
+
 Item {
     signal backClicked;
 
@@ -13,6 +16,8 @@ Item {
         
         saveBtn.visible = false
     }
+
+
 
     Item{
         id:header
@@ -119,4 +124,69 @@ Item {
         height:40
     }
 
+
+    APIUpdater{
+        id:updater
+        onIsRequestingChanged: {
+            if(isRequesting){
+                checkBtn.enabled = false
+            }else{
+                checkBtn.enabled = true
+                if(updater.updateLink.length > 0){
+                    linkText.text = "<u><a  href='" + updater.updateLink + "'>" + updater.requestResult + "</a></u>"
+                }else{
+                    linkText.text = requestResult
+                }
+
+
+            }
+        }
+    }
+
+
+    Button{
+        id:checkBtn
+        text:"check update"
+        font.capitalization: Font.MixedCase
+        height: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: modelSelector.bottom
+        anchors.topMargin: 50
+        Material.background: Material.Green
+        Material.foreground :"white"
+        onClicked: {
+            updater.check()
+        }
+    }
+    BusyIndicator {
+        anchors.verticalCenter: checkBtn.verticalCenter
+        anchors.left:checkBtn.right
+        anchors.leftMargin: 10
+        running: updater.isRequesting
+        visible:updater.isRequesting
+        width:checkBtn.height - 10
+        height:width
+    }
+    Text{
+        id:linkText
+        anchors.horizontalCenter: checkBtn.horizontalCenter
+        anchors.top:checkBtn.bottom
+        anchors.topMargin: 10
+        visible:!updater.isRequesting
+        text: "<u><a href='" + "https://www.google.com" + "'>" + updater.requestResult + "</a></u>"
+        onLinkActivated: Qt.openUrlExternally(updater.updateLink)
+    }
+    TextArea{
+        anchors.top:linkText.bottom
+        anchors.topMargin: 10
+        anchors.left: header.left
+        anchors.right: header.right
+        visible:!updater.isRequesting
+        text:updater.releaseNote
+        readOnly: true
+        wrapMode: Text.WrapAnywhere
+        y:30
+        background: Rectangle {
+        }
+    }
 }
