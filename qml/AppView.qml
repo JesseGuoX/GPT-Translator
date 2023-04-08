@@ -262,6 +262,8 @@ Item {
         onClicked: {
             api.abort()
         }
+        Material.background: Material.Green
+        Material.foreground :"white"
     }
 
     ComboBox {

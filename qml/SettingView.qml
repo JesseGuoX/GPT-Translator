@@ -142,7 +142,26 @@ Item {
             }
         }
     }
+    Text{
+        id:about
+        anchors.left: header.left
+        anchors.top:modelSelector.bottom
+        anchors.topMargin: 10
+        text:"About"
+        font.bold: true
+        color:"green"
+    }
 
+    Text{
+        id:version
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top:about.bottom
+        anchors.topMargin: 15
+        text:"Version:" +  Qt.application.version
+        font.bold: true
+        font.pixelSize: 12
+        color:"green"
+    }
 
     Button{
         id:checkBtn
@@ -150,8 +169,8 @@ Item {
         font.capitalization: Font.MixedCase
         height: 40
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: modelSelector.bottom
-        anchors.topMargin: 50
+        anchors.top: about.bottom
+        anchors.topMargin: 30
         Material.background: Material.Green
         Material.foreground :"white"
         onClicked: {
@@ -189,4 +208,6 @@ Item {
         background: Rectangle {
         }
     }
+
+
 }

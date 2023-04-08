@@ -28,7 +28,14 @@ int main(int argc, char *argv[])
         }
     }
 
+    #ifdef APP_VERSION
+    app.setApplicationVersion(APP_VERSION);
+    #else
+    app.setApplicationVersion("NOT FOUND");
+    #endif
+
     Setting * setting = new Setting();
+
 
     qmlRegisterType<Controller>("Controller",1,0,"APIController");
     qmlRegisterType<Updater>("Updater",1,0,"APIUpdater");
