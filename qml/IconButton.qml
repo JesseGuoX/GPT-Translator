@@ -1,6 +1,6 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.2
-
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 Item {
     id: root
     width: 100
@@ -33,6 +33,24 @@ Item {
         sourceSize.height: root.height * 2
         //默认按鼠标状态选取不同的图片
         source: root.enabled ? (containsPress ? pressedUrl : (containsMouse ? hoveredUrl : normalUrl)) : disabledUrl
+        ColorOverlay{
+            id:overlay
+            anchors.fill: img
+            source:img
+            color:"green"
+            transform:rotation
+            antialiasing: true
+        }
+        ColorOverlay{
+            id:overlay2
+            visible:false
+            anchors.fill: overlay
+            source:overlay
+            color:"grey"
+            transform:rotation
+            antialiasing: true
+            opacity:0.7
+        }
     }
     Text {
         id:t
@@ -49,6 +67,14 @@ Item {
         anchors.fill: parent;
         hoverEnabled: parent.enabled;
         onClicked: root.clicked();
+        onPressed: {
+           overlay2.visible = true
+        }
+        onReleased: {
+            overlay2.visible = false
+
+        }
+
         cursorShape: Qt.PointingHandCursor
         preventStealing: true
     }

@@ -10,8 +10,10 @@ import "."
 Window {
     id: mainWindow
     visible: true
-    width: 500
+    width: 400
     height: 600
+    minimumHeight:500
+    minimumWidth:400
     title: qsTr("GPT Translator")
 
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
@@ -22,7 +24,6 @@ Window {
            if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_R ||
                    (event.modifiers & Qt.MetaModifier) && event.key === Qt.Key_R) {
                   // Command+R or Ctrl+R pressed
-
                 appView.startTrans()
               }
         }

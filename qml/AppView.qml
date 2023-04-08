@@ -52,7 +52,7 @@ Item {
         anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 200
+        height: parent.height/3
         contentWidth: width
         contentHeight: inputArea.contentHeight
         TextArea {
@@ -94,7 +94,7 @@ Item {
         anchors.top:indictor.bottom
         anchors.topMargin: 5
         anchors.bottom: langSelector.top
-        anchors.bottomMargin: 20
+        anchors.bottomMargin: 10
         contentWidth: width
         contentHeight: result.implicitHeight
         TextArea {
