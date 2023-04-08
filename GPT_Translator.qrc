@@ -10,5 +10,6 @@
         <file>res/setting.svg</file>
         <file>res/back.svg</file>
         <file>res/save.svg</file>
+        <file>res/thumbtack.svg</file>
     </qresource>
 </RCC>

@@ -53,7 +53,7 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = nullptr);
 
-    Q_INVOKABLE void sendMessage(QString &str);
+    Q_INVOKABLE void sendMessage(QString str);
     Q_INVOKABLE void abort();
 
 signals:

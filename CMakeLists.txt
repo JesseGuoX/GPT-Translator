@@ -8,13 +8,14 @@ set(CMAKE_AUTORCC ON) # Resource Compiler
 set(CMAKE_AUTOUIC ON) # User Interface Compiler
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_PREFIX_PATH "/Users/jg/Qt6/6.2.4/macos/lib/cmake/")
+set(CMAKE_PREFIX_PATH "/Users/jg/Qt6/6.5.0/macos/lib/cmake/")
 
 
 
 #find_package(Qt6 6.2 COMPONENTS Quick QuickControls2 Concurrent Network REQUIRED)
 
-find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
+#find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui TextToSpeech Widgets)
 
 
 set(HEADERS
@@ -52,7 +53,12 @@ set_target_properties(GPT_Translator PROPERTIES
 )
 
 target_link_libraries(GPT_Translator
-    PRIVATE Qt6::Quick)
+    PRIVATE
+    Qt6::Quick
+    Qt6::Core
+    Qt6::Gui
+    Qt6::TextToSpeech
+    Qt6::Widgets)
 
 #target_link_libraries(GPT_Translator PRIVATE
 #    Qt6::Core

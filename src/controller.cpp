@@ -128,7 +128,7 @@ void Controller::streamReceived()
 
 }
 
-void Controller::sendMessage(QString &str)
+void Controller::sendMessage(QString str)
 {
 
     QUrl apiUrl("https://api.openai.com/v1/chat/completions");

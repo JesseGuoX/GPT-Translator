@@ -2,11 +2,21 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Controller
+import QtTextToSpeech
+
+import QtQuick.Controls.Material
 Item {
 
     signal settingClicked;
     function startTrans(){
         transBtn.clicked()
+    }
+
+    TextToSpeech {
+            id: tts
+            volume: 0.5
+            pitch: 0
+            rate: 0
     }
 
     Item{
@@ -30,6 +40,7 @@ Item {
 
 
         IconButton{
+            id:settingBtn
             width: 18
             height:18
             anchors.right: parent.right
@@ -39,6 +50,29 @@ Item {
             pressedUrl:"qrc:///res/setting.svg"
             onClicked: {
                 settingClicked();
+            }
+        }
+        IconButton{
+            width: 13
+            height:18
+            anchors.horizontalCenter: settingBtn.horizontalCenter
+            anchors.top: settingBtn.bottom
+            anchors.topMargin: 10
+            normalUrl:"qrc:///res/thumbtack.svg"
+            hoveredUrl:"qrc:///res/thumbtack.svg"
+            pressedUrl:"qrc:///res/thumbtack.svg"
+            state:"0"
+            onClicked: {
+                tts.say(result.text)
+                if(state == "0"){
+                    state = "1"
+                    mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
+                }else{
+                    state = "0"
+                    mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
+
+                }
+
             }
         }
 
@@ -55,11 +89,18 @@ Item {
         height: parent.height/3
         contentWidth: width
         contentHeight: inputArea.contentHeight
+        ScrollBar.vertical: ScrollBar {
+           width:(parent.contentHeight >= parent.height)?10:0
+           height:parent.height
+           anchors.right: parent.right // adjust the anchor as suggested by derM
+           policy: ScrollBar.AlwaysOn
+       }
         TextArea {
             id: inputArea
-            wrapMode: Text.WordWrap
-            padding: 10
-            placeholderText: "Input Anything."
+            wrapMode: Text.WrapAnywhere
+            padding: 20
+//            placeholderText: "Input Anything."
+
             focus:true
             selectByMouse:true
             selectByKeyboard:true
@@ -69,8 +110,15 @@ Item {
                 color: "white"
                 border.width : 1
                 border.color: "green"
-
             }
+            y:20
+//            color:"green"
+//            Material.containerStyle:Material.Filled
+//            Material.accent: Material.Teal
+//            Material.background: Material.Teal
+//            Material.foreground :Material.Teal
+//            Material.primary: Material.Teal
+
         }
 
     }
@@ -97,12 +145,18 @@ Item {
         anchors.bottomMargin: 10
         contentWidth: width
         contentHeight: result.implicitHeight
+        ScrollBar.vertical: ScrollBar {
+           width:(parent.contentHeight >= parent.height)?10:0
+           height:parent.height
+           anchors.right: parent.right // adjust the anchor as suggested by derM
+           policy: ScrollBar.AlwaysOn
+       }
         TextArea {
             id: result
-            wrapMode: Text.WordWrap
+            wrapMode: Text.WrapAnywhere
             padding: 10
+            y:20
             background: Rectangle {
-
             }
             color:"green"
             font.pixelSize: 14
@@ -113,8 +167,6 @@ Item {
             }
             readOnly: true
         }
-
-
     }
 
 
@@ -127,8 +179,9 @@ Item {
         enabled:inputArea.length > 0
         onClicked: {
             api.sendMessage(inputArea.text)
-
         }
+        height:50
+
     }
     BusyIndicator {
         anchors.verticalCenter: stopBtn.verticalCenter
@@ -161,6 +214,7 @@ Item {
         onCurrentTextChanged: {
             api.transToLang = currentText
         }
+        height:40
     }
 
     APIController{

@@ -69,23 +69,38 @@ Item {
         font.bold: true
         color:"green"
     }
-    TextArea{
-        id:keyInput
-        height:50
+
+    ScrollView {
+        id:keyInputScroll
         anchors.left: header.left
         anchors.right: header.right
         anchors.top:apiText.bottom
         anchors.topMargin: 10
-        font.pixelSize: 14
-        onTextChanged:{
-           saveBtn.visible = true
-        }
+        height:80
+        contentWidth: width
+        contentHeight: keyInput.contentHeight
+        ScrollBar.vertical: ScrollBar {
+           width:(parent.contentHeight >= parent.height)?10:0
+           height:parent.height
+           anchors.right: parent.right
+           policy: ScrollBar.AlwaysOn
+       }
+        TextArea{
+            id:keyInput
+            height:80
+            font.pixelSize: 14
+            wrapMode: Text.WrapAnywhere
+            onTextChanged:{
+               saveBtn.visible = true
+            }
 
+        }
     }
+
     Text{
         id:modelText
         anchors.left: header.left
-        anchors.top:keyInput.bottom
+        anchors.top:keyInputScroll.bottom
         anchors.topMargin: 10
         text:"Model"
         font.bold: true
@@ -101,6 +116,7 @@ Item {
         onCurrentIndexChanged:{
             saveBtn.visible = true
         }
+        height:40
     }
 
 }
