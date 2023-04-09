@@ -9,7 +9,8 @@ Item {
 
     signal settingClicked;
     function startTrans(){
-        transBtn.clicked()
+        if(inputArea.length > 0)
+            transBtn.clicked()
     }
 
     function getMode(){
@@ -303,9 +304,9 @@ Item {
             result.text = responseData
         }
         onResponseErrorChanged: {
-//            if(responseError != ""){
-//                result.text = responseError + ":\n" + result.text
-//            }
+            if(responseError != ""){
+                result.text = responseError + ":\n" + result.text
+            }
         }
         onIsRequestingChanged: {
             if(isRequesting){
@@ -319,12 +320,15 @@ Item {
         Component.onCompleted: {
             api.apiKey = setting.apiKey
             api.model = setting.model
+            api.apiServer = setting.apiServer
         }
     }
     Connections{
         target: setting
+        function onApiServerChanged(){
+            api.apiServer = setting.apiServer
+        }
         function onApiKeyChanged(){
-            console.log( setting.apiKey)
             api.apiKey = setting.apiKey
         }
         function onModelChanged(){

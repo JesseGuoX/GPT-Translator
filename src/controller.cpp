@@ -45,6 +45,10 @@ bool Setting::loadConfig()
             QJsonObject obj = doc.object();
             _apiKey = obj.value("apiKey").toString();
             _model = obj.value("model").toString();
+            _apiServer = obj.value("apiServer").toString();
+            if(_apiServer.trimmed().length() == 0){
+                _apiServer = "https://api.openai.com";
+            }
             return true;
         }
     }
@@ -53,7 +57,7 @@ bool Setting::loadConfig()
 
 void Setting::updateConfig()
 {
-    QString s = "{\"apiKey\":\"" + _apiKey + "\",\"model\":\"" + _model + "\"}";
+    QString s = "{\"apiKey\":\"" + _apiKey + "\",\"model\":\"" + _model + "\", \"apiServer\":\"" + _apiServer + "\"}";
     QFile file(_configPath);
     if(file.open(QIODevice::WriteOnly)){
         QTextStream out(&file);
@@ -131,8 +135,10 @@ void Controller::streamReceived()
 
 void Controller::sendMessage(QString str, int mode)
 {
-
-    QUrl apiUrl("https://api.openai.com/v1/chat/completions");
+    if(_apiServer.trimmed().length() == 0){
+        _apiServer = "https://api.openai.com";
+    }
+    QUrl apiUrl(_apiServer + "/v1/chat/completions");
       QNetworkRequest request(apiUrl);
       request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
       request.setRawHeader("Authorization", QString::fromStdString("Bearer %1").arg(_apiKey).toUtf8());

@@ -28,6 +28,7 @@
 class Setting : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY_AUTO(QString,apiServer);
     Q_PROPERTY_AUTO(QString,apiKey);
     Q_PROPERTY_AUTO(QString,model);
 public:
@@ -46,6 +47,7 @@ class Controller : public QObject
     Q_PROPERTY_AUTO(QString,responseError);
     Q_PROPERTY_AUTO(QString,transToLang);
     Q_PROPERTY_AUTO(bool,isRequesting);
+    Q_PROPERTY_AUTO(QString,apiServer);
     Q_PROPERTY_AUTO(QString,apiKey);
     Q_PROPERTY_AUTO(QString,model);
 

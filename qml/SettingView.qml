@@ -9,6 +9,7 @@ Item {
     function reload(){
         setting.loadConfig()
         keyInput.text = setting.apiKey
+        serverInput.text = setting.apiServer
         if(setting.model == "gpt-3.5-turbo")
             modelSelector.currentIndex = 0
         else if(setting.model == "gpt-4")
@@ -54,6 +55,7 @@ Item {
             hoveredUrl:"qrc:///res/save.svg"
             pressedUrl:"qrc:///res/save.svg"
             onClicked: {
+                setting.apiServer = serverInput.text.trim()
                 setting.apiKey = keyInput.text
                 if(modelSelector.currentIndex == 0)
                     setting.model = "gpt-3.5-turbo"
@@ -66,10 +68,44 @@ Item {
 
     }
     Text{
-        id:apiText
+        id:serverText
         anchors.left: header.left
         anchors.top:header.bottom
         anchors.topMargin: 10
+        text:"API Server"
+        font.bold: true
+        color:"green"
+    }
+
+    Item {
+        id:serverItem
+        anchors.left: header.left
+        anchors.right: header.right
+        anchors.top:serverText.bottom
+        anchors.topMargin: 10
+        height:30
+        Rectangle {
+            color: "#E6E7E7"
+            anchors.fill: parent
+            radius: 5
+        }
+
+        TextInput {
+            id:serverInput
+            anchors.fill: parent
+            padding:7
+            text: "https://api.openai.com"
+            onTextChanged: {
+                saveBtn.visible = true
+            }
+        }
+    }
+
+    Text{
+        id:apiText
+        anchors.left: header.left
+        anchors.top:serverItem.bottom
+        anchors.topMargin: 20
         text:"API Key"
         font.bold: true
         color:"green"
@@ -83,7 +119,7 @@ Item {
         anchors.topMargin: 10
         height:80
         contentWidth: width
-        contentHeight: keyInput.contentHeight
+        contentHeight: keyInput.contentHeight + 20
         ScrollBar.vertical: ScrollBar {
            width:(parent.contentHeight >= parent.height)?10:0
            height:parent.height
@@ -94,9 +130,15 @@ Item {
             id:keyInput
             height:80
             font.pixelSize: 14
+            y:20
             wrapMode: Text.WrapAnywhere
             onTextChanged:{
                saveBtn.visible = true
+            }
+            background: Rectangle{
+                color: "#E6E7E7"
+                radius: 5
+
             }
 
         }
