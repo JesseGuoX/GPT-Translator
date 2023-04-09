@@ -33,8 +33,15 @@ set(RESOURCES
     GPT_Translator.qrc
 )
 
+set(MACOSX_BUNDLE_ICON_FILE logo.icns)
 
-qt_add_executable(GPT_Translator
+# And the following tells CMake where to find and install the file itself.
+set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.icns")
+set_source_files_properties(${app_icon_macos} PROPERTIES
+       MACOSX_PACKAGE_LOCATION "Resources")
+
+
+qt_add_executable(GPT_Translator MACOSX_BUNDLE ${app_icon_macos}
    ${SOURCES} ${HEADERS} ${RESOURCES}
 )
 
@@ -53,6 +60,8 @@ set_target_properties(GPT_Translator PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+
 
 target_link_libraries(GPT_Translator
     PRIVATE

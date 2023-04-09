@@ -25,7 +25,7 @@ Item {
         anchors.left: parent.left
         anchors.right:parent.right
         anchors.margins: 15
-        height:50
+        height:30
 
 
         IconButton{
@@ -106,7 +106,7 @@ Item {
         id:modelText
         anchors.left: header.left
         anchors.top:keyInputScroll.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: 20
         text:"Model"
         font.bold: true
         color:"green"
@@ -123,6 +123,97 @@ Item {
         }
         height:40
     }
+
+
+
+    Text{
+        id:about
+        anchors.left: header.left
+        anchors.top:modelSelector.bottom
+        anchors.topMargin: 20
+        text:"About"
+        font.bold: true
+        color:"green"
+    }
+
+
+    Column{
+        spacing:10
+        anchors.top:about.bottom
+        anchors.topMargin: 15
+        anchors.left: header.left
+        anchors.right: header.right
+        Image{
+            id:icon
+            anchors.horizontalCenter: parent.horizontalCenter
+            source:"qrc:///res/logo/logo.ico"
+            height:40
+            width:40
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    Qt.openUrlExternally("https://github.com/JesseGuoX/GPT-Translator")
+                }
+            }
+        }
+
+        Text{
+            id:version
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 15
+            text:"Current version:" +  Qt.application.version
+            font.bold: true
+            font.pixelSize: 12
+            color:"green"
+        }
+        Rectangle{
+            anchors.horizontalCenter: parent.horizontalCenter
+            height:checkBtn.height
+            width:parent.width
+            Button{
+                id:checkBtn
+                text:"check update"
+                font.capitalization: Font.MixedCase
+                height: 40
+                anchors.horizontalCenter: parent.horizontalCenter
+                Material.background: Material.Green
+                Material.foreground :"white"
+                onClicked: {
+                    updater.check()
+                }
+            }
+            BusyIndicator {
+                anchors.verticalCenter: checkBtn.verticalCenter
+                anchors.left:checkBtn.right
+                anchors.leftMargin: 10
+                running: updater.isRequesting
+                visible:updater.isRequesting
+                width:checkBtn.height - 10
+                height:width
+            }
+        }
+
+
+        Text{
+            id:linkText
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            visible:!updater.isRequesting
+            text: "<u><a href='" + "https://www.google.com" + "'>" + updater.requestResult + "</a></u>"
+            onLinkActivated: Qt.openUrlExternally(updater.updateLink)
+        }
+        TextArea{
+            width:parent.width
+            visible:!updater.isRequesting
+            text:updater.releaseNote
+            readOnly: true
+            wrapMode: Text.WrapAnywhere
+            y:30
+            background: Rectangle {
+            }
+        }
+    }
+
 
 
     APIUpdater{
@@ -142,72 +233,5 @@ Item {
             }
         }
     }
-    Text{
-        id:about
-        anchors.left: header.left
-        anchors.top:modelSelector.bottom
-        anchors.topMargin: 10
-        text:"About"
-        font.bold: true
-        color:"green"
-    }
-
-    Text{
-        id:version
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top:about.bottom
-        anchors.topMargin: 15
-        text:"Version:" +  Qt.application.version
-        font.bold: true
-        font.pixelSize: 12
-        color:"green"
-    }
-
-    Button{
-        id:checkBtn
-        text:"check update"
-        font.capitalization: Font.MixedCase
-        height: 40
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: about.bottom
-        anchors.topMargin: 30
-        Material.background: Material.Green
-        Material.foreground :"white"
-        onClicked: {
-            updater.check()
-        }
-    }
-    BusyIndicator {
-        anchors.verticalCenter: checkBtn.verticalCenter
-        anchors.left:checkBtn.right
-        anchors.leftMargin: 10
-        running: updater.isRequesting
-        visible:updater.isRequesting
-        width:checkBtn.height - 10
-        height:width
-    }
-    Text{
-        id:linkText
-        anchors.horizontalCenter: checkBtn.horizontalCenter
-        anchors.top:checkBtn.bottom
-        anchors.topMargin: 10
-        visible:!updater.isRequesting
-        text: "<u><a href='" + "https://www.google.com" + "'>" + updater.requestResult + "</a></u>"
-        onLinkActivated: Qt.openUrlExternally(updater.updateLink)
-    }
-    TextArea{
-        anchors.top:linkText.bottom
-        anchors.topMargin: 10
-        anchors.left: header.left
-        anchors.right: header.right
-        visible:!updater.isRequesting
-        text:updater.releaseNote
-        readOnly: true
-        wrapMode: Text.WrapAnywhere
-        y:30
-        background: Rectangle {
-        }
-    }
-
 
 }

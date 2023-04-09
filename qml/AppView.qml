@@ -93,28 +93,46 @@ Item {
                 settingClicked();
             }
         }
-        IconButton{
-            width: 13
-            height:18
+
+        Item{
+            id:tItem
+            width: 20
+            height:20
             anchors.horizontalCenter: settingBtn.horizontalCenter
             anchors.top: settingBtn.bottom
             anchors.topMargin: 10
-            normalUrl:"qrc:///res/thumbtack.svg"
-            hoveredUrl:"qrc:///res/thumbtack.svg"
-            pressedUrl:"qrc:///res/thumbtack.svg"
-            state:"0"
-            onClicked: {
-                if(state == "0"){
-                    state = "1"
-                    mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
-                }else{
-                    state = "0"
-                    mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
+            state:"no"
+            Image{
+                id:tyes
+                anchors.fill: parent
+                source:"qrc:///res/thumbtack_yes.png"
+                visible:tItem.state === "yes"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
+                        tItem.state = "no"
 
+                    }
                 }
+            }
+            Image{
+                id:tyno
+                anchors.fill: parent
+                source:"qrc:///res/thumbtack_no.png"
+                visible:tItem.state === "no"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
+                        tItem.state = "yes"
 
+                    }
+                }
             }
         }
+
+
 
     }
 

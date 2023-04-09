@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 {
 
     QGuiApplication app(argc, argv);
+    app.setWindowIcon(QIcon("qrc:///res/logo/logo.ico"));
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
