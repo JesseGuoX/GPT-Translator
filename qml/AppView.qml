@@ -5,11 +5,12 @@ import Controller
 import QtTextToSpeech
 
 import QtQuick.Controls.Material
+import "."
 Item {
 
     signal settingClicked;
     function startTrans(){
-        if(inputArea.length > 0)
+        if(inputArea.text.length > 0)
             transBtn.clicked()
     }
 
@@ -23,7 +24,7 @@ Item {
     }
 
     function speekDisplay(){
-        if(getMode() == 0){
+        if(getMode() === 0){
             if((result.text.length > 0) && (langSelector.currentText === "English")){
                 return true
             }
@@ -97,8 +98,8 @@ Item {
 
         Item{
             id:tItem
-            width: 20
-            height:20
+            width: 22
+            height:22
             anchors.horizontalCenter: settingBtn.horizontalCenter
             anchors.top: settingBtn.bottom
             anchors.topMargin: 10
@@ -137,57 +138,35 @@ Item {
 
     }
 
-
-    ScrollView {
-        id: inputScroll
-        width: parent.width
+    Item{
+        id:inputItem
         anchors.margins: 10
         anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height/3
-        contentWidth: width
-        contentHeight: inputArea.contentHeight
-        ScrollBar.vertical: ScrollBar {
-           width:(parent.contentHeight >= parent.height)?10:0
-           height:parent.height
-           anchors.right: parent.right // adjust the anchor as suggested by derM
-           policy: ScrollBar.AlwaysOn
-       }
-        TextArea {
-            id: inputArea
-            wrapMode: Text.WrapAnywhere
-            padding: 20
-//            placeholderText: "Input Anything."
-
-            focus:true
-            selectByMouse:true
-            selectByKeyboard:true
-            font.pixelSize: 14
-            background: Rectangle {
-                radius: 6
-                color: "white"
-                border.width : 1
-                border.color: "green"
-            }
-            y:20
-//            color:"green"
-//            Material.containerStyle:Material.Filled
-//            Material.accent: Material.Teal
-//            Material.background: Material.Teal
-//            Material.foreground :Material.Teal
-//            Material.primary: Material.Teal
-
+        clip:true
+        Rectangle {
+            radius: 6
+            color: "transparent"
+            border.width : 1
+            border.color: "green"
+            anchors.fill: parent
         }
-
+        GTextEdit{
+            id:inputArea
+            anchors.fill: parent
+            autoScroll:false
+            textedit.focus : true
+        }
     }
 
 
     Text{
         id:indictor
         text:"Translated"
-        anchors.left: inputScroll.left
-        anchors.top:inputScroll.bottom
+        anchors.left: inputItem.left
+        anchors.top:inputItem.bottom
         font.bold: true
         color:"green"
         anchors.topMargin: 30
@@ -199,7 +178,7 @@ Item {
         width: 18
         height:18
         anchors.verticalCenter: indictor.verticalCenter
-        anchors.right: inputScroll.right
+        anchors.right: inputItem.right
         normalUrl:"qrc:///res/speaker.svg"
         hoveredUrl:"qrc:///res/speaker.svg"
         pressedUrl:"qrc:///res/speaker.svg"
@@ -209,42 +188,17 @@ Item {
         }
     }
 
-
-    ScrollView {
-        id: resultScroll
-        width: parent.width
-        anchors.left: inputScroll.left
-        anchors.right: inputScroll.right
+    GTextEdit{
+        id:result
+        anchors.left: inputItem.left
+        anchors.right: inputItem.right
         anchors.top:indictor.bottom
         anchors.topMargin: 5
         anchors.bottom: langSelector.top
         anchors.bottomMargin: 10
-        contentWidth: width
-        contentHeight: result.implicitHeight
-        ScrollBar.vertical: ScrollBar {
-           width:(parent.contentHeight >= parent.height)?10:0
-           height:parent.height
-           anchors.right: parent.right // adjust the anchor as suggested by derM
-           policy: ScrollBar.AlwaysOn
-       }
-        TextArea {
-            id: result
-            wrapMode: Text.WrapAnywhere
-            padding: 10
-            y:20
-            background: Rectangle {
-            }
-            color:"green"
-            font.pixelSize: 14
-            selectByMouse:true
-            selectByKeyboard:true
-            onTextChanged: {
-                resultScroll.ScrollBar.vertical.position = result.contentHeight
-            }
-            readOnly: true
-        }
+        autoScroll:true
+        readOnly:true
     }
-
 
     Button{
         id:transBtn
@@ -253,7 +207,7 @@ Item {
         anchors.margins:10
         text:(Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Translate ⌘R":"Translate ^R"
         font.capitalization: Font.MixedCase
-        enabled:inputArea.length > 0
+        enabled:inputArea.text.length > 0
         onClicked: {
             api.sendMessage(inputArea.text, grammerRadio.checked?1:0)
         }
