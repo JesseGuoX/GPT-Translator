@@ -17,10 +17,11 @@ jobs:
     strategy:
       matrix:
         os: [macos-12]
-        qt_ver: [6.4.3]
+        qt_ver: [6.5.0]
         qt_arch: [clang_64]
     env:
       targetName: GPT_Translator
+      BUILD_TYPE:  Release
     steps:
       - name: '⚙️ Cache Qt'
         id: cache-qt
@@ -34,13 +35,13 @@ jobs:
           version: ${{ matrix.qt_ver }}
           cache: ${{steps.cache-qt.outputs.cache-hit}}
           arch: ${{ matrix.qt_arch }}
-          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats'
+          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats qtspeech'
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: build macos
         run: |
-          qmake
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
           make
       # 打包
       - name: package
