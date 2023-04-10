@@ -20,11 +20,11 @@ Flickable {
     }
     ScrollBar.vertical:ScrollBar {
         id: scrollbar
-        anchors {
-            top: parent.top
-            right: parent.right
-            bottom: parent.bottom
-        }
+//        anchors {
+//            top: parent.top
+//            right: parent.right
+//            bottom: parent.bottom
+//        }
         width:10
         orientation: Qt.Vertical
         size: flick.height / flick.contentHeight

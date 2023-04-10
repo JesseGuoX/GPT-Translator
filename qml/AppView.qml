@@ -7,7 +7,7 @@ import QtTextToSpeech
 import QtQuick.Controls.Material
 import "."
 Item {
-
+    id:root
     signal settingClicked;
     function startTrans(){
         if(inputArea.text.length > 0 && transBtn.visible)
@@ -42,6 +42,10 @@ Item {
         rate: 0
     }
 
+    Component.onCompleted: {
+        inputAni.restart()
+    }
+
 
     Item{
         id:header
@@ -58,24 +62,34 @@ Item {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             onCurrentIndexChanged: {
+                stopBtn.clicked()
+
                 switch(currentIndex){
                 case 0:{
                     indictor.text = "Translated"
                     transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Translate ⌘R":"Translate ^R"
                     langSelector.visible = true
+                    inputAni.to = root.height /3
+                    inputAni.start()
                 }break;
                 case 1:{
                     indictor.text = "Word"
                     transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Lookup ⌘R":"Lookup ^R"
                     langSelector.visible = true
+                    inputAni.to = 40
+                    inputAni.start()
                 }break;
                 case 2:{
                     indictor.text = "Grammar fixed"
                     transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Fix ⌘R":"Fix ^R"
                     langSelector.visible = false
+                    inputAni.to = root.height /3
+                    inputAni.start()
                 }break;
                 }
                 result.text = ""
+                inputArea.text = ""
+
             }
         }
 
@@ -117,6 +131,12 @@ Item {
             autoScroll:false
             textedit.focus : true
         }
+        NumberAnimation on height {
+            id:inputAni
+            to: parent.height/3
+            duration:200
+        }
+
     }
 
     Item{
@@ -164,7 +184,7 @@ Item {
         anchors.top:inputItem.bottom
         font.bold: true
         color:"green"
-        anchors.topMargin: 35
+        anchors.topMargin: 40
 
     }
 

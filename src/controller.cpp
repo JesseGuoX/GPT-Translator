@@ -215,13 +215,18 @@ void Controller::sendMessage(QString str, int mode)
               qDebug() << "网络错误："+  reply->errorString();
           }
           reply->deleteLater();
+          reply = nullptr;
       });
 }
 
 
 void Controller::abort()
 {
-    reply->abort();
+    try {
+        if(reply)
+        reply->abort();
+    } catch (...) {
+    }
 }
 
 
