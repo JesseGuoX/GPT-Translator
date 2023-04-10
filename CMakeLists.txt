@@ -8,14 +8,14 @@ set(CMAKE_AUTORCC ON) # Resource Compiler
 set(CMAKE_AUTOUIC ON) # User Interface Compiler
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(NOT DEFINED CMAKE_PREFIX_PATH)
 set(CMAKE_PREFIX_PATH "/Users/jg/Qt6/6.5.0/macos/lib/cmake/")
+endif()
 
 
 
-#find_package(Qt6 6.2 COMPONENTS Quick QuickControls2 Concurrent Network REQUIRED)
-
-#find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui TextToSpeech Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Quick TextToSpeech)
 
 
 set(HEADERS
@@ -37,13 +37,15 @@ set(RESOURCES
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
-
-ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
-	MESSAGE(STATUS "current platform: Windows")
-
         qt_add_executable(GPT_Translator
             ${SOURCES} ${HEADERS} ${RESOURCES}
         )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	MESSAGE(STATUS "current platform: Windows")
+    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.rc")
+    qt_add_executable(GPT_Translator ${app_icon_resource_windows}
+        ${SOURCES} ${HEADERS} ${RESOURCES}
+    )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin")
 
@@ -82,10 +84,8 @@ set_target_properties(GPT_Translator PROPERTIES
 target_link_libraries(GPT_Translator
     PRIVATE
     Qt6::Quick
-    Qt6::Core
-    Qt6::Gui
     Qt6::TextToSpeech
-    Qt6::Widgets)
+    )
 
 
 
