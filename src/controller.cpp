@@ -141,6 +141,11 @@ void Controller::sendMessage(QString str, int mode)
     if(_apiServer.trimmed().length() == 0){
         _apiServer = "https://api.openai.com";
     }
+
+    if(_apiKey.length() < 10){
+        responseError("Please provide the correct apikey");
+        return;
+    }
     QUrl apiUrl(_apiServer + "/v1/chat/completions");
       QNetworkRequest request(apiUrl);
       request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
