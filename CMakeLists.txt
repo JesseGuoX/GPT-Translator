@@ -33,17 +33,29 @@ set(RESOURCES
     GPT_Translator.qrc
 )
 
-set(MACOSX_BUNDLE_ICON_FILE logo.icns)
-
-# And the following tells CMake where to find and install the file itself.
-set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.icns")
-set_source_files_properties(${app_icon_macos} PROPERTIES
-       MACOSX_PACKAGE_LOCATION "Resources")
 
 
-qt_add_executable(GPT_Translator MACOSX_BUNDLE ${app_icon_macos}
-   ${SOURCES} ${HEADERS} ${RESOURCES}
-)
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	MESSAGE(STATUS "current platform: Linux ")
+
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	MESSAGE(STATUS "current platform: Windows")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+	MESSAGE(STATUS "current platform: Darwin")
+
+    set(MACOSX_BUNDLE_ICON_FILE logo.icns)
+    # And the following tells CMake where to find and install the file itself.
+    set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.icns")
+    set_source_files_properties(${app_icon_macos} PROPERTIES
+           MACOSX_PACKAGE_LOCATION "Resources")
+    
+    qt_add_executable(GPT_Translator MACOSX_BUNDLE ${app_icon_macos}
+        ${SOURCES} ${HEADERS} ${RESOURCES}
+    )
+
+ENDIF()
+
+
 
 include_directories("src")
 
@@ -71,13 +83,7 @@ target_link_libraries(GPT_Translator
     Qt6::TextToSpeech
     Qt6::Widgets)
 
-#target_link_libraries(GPT_Translator PRIVATE
-#    Qt6::Core
-#    Qt6::Quick
-#    Qt6::QuickControls2
-#    Qt6::Concurrent
-#    Qt6::Network
-#)
+
 
 install(TARGETS GPT_Translator
     BUNDLE DESTINATION .

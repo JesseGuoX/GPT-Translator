@@ -10,17 +10,12 @@ Item {
 
     signal settingClicked;
     function startTrans(){
-        if(inputArea.text.length > 0)
+        if(inputArea.text.length > 0 && transBtn.visible)
             transBtn.clicked()
     }
 
     function getMode(){
-        if(transRadio.checked){
-            return 0
-        }
-        if(grammerRadio.checked){
-            return 1
-        }
+        return transRadio.currentIndex
     }
 
     function speekDisplay(){
@@ -28,7 +23,11 @@ Item {
             if((result.text.length > 0) && (langSelector.currentText === "English")){
                 return true
             }
-        }else{
+        }else if(getMode() === 1){
+            if((inputArea.text.length > 0)){
+                return true
+            }
+        }else if(getMode() === 2){
             if((result.text.length > 0)){
                 return true
             }
@@ -52,33 +51,32 @@ Item {
         anchors.margins: 15
 
         height:50
-        RowLayout {
-            RadioButton {
-                id:transRadio
-                checked: true
-                text: qsTr("Translation")
-                onCheckedChanged: {
-                    if(checked){
-                        indictor.text = "Translated"
-                        transBtn.text = (Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Translate ⌘R":"Translate ^R"
-                        langSelector.visible = true
-                    }
-                    result.text = ""
-                }
-            }
-            RadioButton {
-                id:grammerRadio
-                text: qsTr("Grammar")
-                onCheckedChanged: {
-                    if(checked){
-                        indictor.text = "Grammar fixed"
-                        transBtn.text = (Qt.platform.os == "macos" || Qt.platform.os == "osx")?"Fix ⌘R":"Fix ^R"
-                        langSelector.visible = false
-                    }
-                    result.text = ""
-                }
-            }
 
+        GRadioGroup{
+            id:transRadio
+            model: ["Translation", "Dictionary", "Grammar"]
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            onCurrentIndexChanged: {
+                switch(currentIndex){
+                case 0:{
+                    indictor.text = "Translated"
+                    transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Translate ⌘R":"Translate ^R"
+                    langSelector.visible = true
+                }break;
+                case 1:{
+                    indictor.text = "Word"
+                    transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Lookup ⌘R":"Lookup ^R"
+                    langSelector.visible = true
+                }break;
+                case 2:{
+                    indictor.text = "Grammar fixed"
+                    transBtn.text = (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"Fix ⌘R":"Fix ^R"
+                    langSelector.visible = false
+                }break;
+                }
+                result.text = ""
+            }
         }
 
 
@@ -184,7 +182,13 @@ Item {
         pressedUrl:"qrc:///res/speaker.svg"
         visible:speekDisplay()
         onClicked: {
-            tts.say(result.text)
+            if(getMode() === 1){
+                //if in dictionary mode then say input inputArea
+                tts.say(inputArea.text)
+            }else{
+                tts.say(result.text)
+            }
+
         }
     }
 
@@ -209,7 +213,7 @@ Item {
         font.capitalization: Font.MixedCase
         enabled:inputArea.text.length > 0
         onClicked: {
-            api.sendMessage(inputArea.text, grammerRadio.checked?1:0)
+            api.sendMessage(inputArea.text, getMode())
         }
         height:50
         Material.background: Material.Green

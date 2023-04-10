@@ -17,5 +17,6 @@
         <file>res/logo/logo.ico</file>
         <file>res/logo/logo.png</file>
         <file>qml/GTextEdit.qml</file>
+        <file>qml/GRadioGroup.qml</file>
     </qresource>
 </RCC>

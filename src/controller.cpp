@@ -108,7 +108,7 @@ std::tuple<QString, bool> Controller::_parseResponse(QByteArray &ba)
     QStringList lines = QString::fromUtf8(ba).split("data:");
     for (const QString &line : lines) {
         QString eventData = line.trimmed();;
-        qDebug() <<eventData;
+//        qDebug() <<eventData;
         QString text;
         bool haveError;
         std::tie(text, haveError) = _getContent(eventData);
@@ -148,19 +148,23 @@ void Controller::sendMessage(QString str, int mode)
       QJsonArray messages;
       requestData.insert("model", _model);
       requestData.insert("stream", true);
-      qDebug() << _transToLang;
+//      qDebug() << _transToLang;
       QString systemcmd;
       if(mode == 0){
-        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result. Don’t interpret it.When the text contains only one word, please provide the original form (if applicable), \
-the language of the word, the corresponding phonetic transcription (if applicable), \
-all meanings (including parts of speech), and at least three bilingual examples. Please strictly follow the format below:\
-                                           <Original Text> \n \
-                                           [<Language>] · / <Phonetic Transcription> \n \
-                                           [<Part of Speech Abbreviation>] <Chinese Meaning>] \n \
-                                           Examples: \n\
-                                           <Number><Example>(Example Translation).The content in this format must be %1 either").arg(_transToLang);
+        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result, don’t interpret it.").arg(_transToLang);
         messages.append(createMessage("system",systemcmd));
-        messages.append(createMessage("user",str));
+        messages.append(createMessage("user", str ));
+      }else if(mode == 1){
+          systemcmd = QString::fromStdString("Translate anything that I say to %1. When the text contains only one single word, please provide the original form (if applicable), \
+  the language of the word, the corresponding phonetic transcription (if applicable), \
+  all meanings (including parts of speech), and at least three bilingual examples. Please strictly follow the format below:\
+                                             <Original Text> \n \
+                                             [<Language>] · / <Phonetic Transcription> \n \
+                                             [<Part of Speech Abbreviation>] <Chinese Meaning>] \n \
+                                             Examples: \n\
+                                             <Number><Example>(Example Translation).The content in this format must be %1 either").arg(_transToLang);
+          messages.append(createMessage("system",systemcmd));
+          messages.append(createMessage("user","\"" + str + "\""));
       }else{
         systemcmd = QString::fromStdString("I want you to strictly correct my grammar mistakes, typos, and factual errors.Only correct sentence in the brackets.").arg(_transToLang);
         messages.append(createMessage("system",systemcmd));
@@ -172,7 +176,7 @@ all meanings (including parts of speech), and at least three bilingual examples.
       requestData.insert("messages", messages);
       QJsonDocument requestDoc(requestData);
       QByteArray requestDataBytes = requestDoc.toJson();
-      qDebug() << requestDataBytes;
+//      qDebug() << requestDataBytes;
 
       _data = "";
       responseData(_data);
