@@ -16,7 +16,7 @@ endif()
 
 
 find_package(Qt6 REQUIRED COMPONENTS Quick TextToSpeech)
-
+qt6_policy(SET QTP0001 OLD)
 
 set(HEADERS
     src/controller.h
@@ -37,17 +37,29 @@ set(RESOURCES
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
+
     qt_add_executable(GPT_Translator
         ${SOURCES} ${HEADERS} ${RESOURCES}
     )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
+
+
     set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.rc")
     qt_add_executable(GPT_Translator ${app_icon_resource_windows}
         ${SOURCES} ${HEADERS} ${RESOURCES}
     )
+
+    set_target_properties(GPT_Translator PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER tinyx.me
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+    )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin")
+
 
     set(MACOSX_BUNDLE_ICON_FILE logo.icns)
     # And the following tells CMake where to find and install the file itself.
@@ -59,25 +71,20 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         ${SOURCES} ${HEADERS} ${RESOURCES}
     )
 
+    set_target_properties(GPT_Translator PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER tinyx.me
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+    )
+
 ENDIF()
 
 
 
 include_directories("src")
 
-qt_add_qml_module(GPT_Translator
-    URI GPT_Translator
-    VERSION 1.0
-#    QML_FILES qml/main.qml qml/GMenu.qml
-)
-
-set_target_properties(GPT_Translator PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER tinyx.me
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
 
 
 
