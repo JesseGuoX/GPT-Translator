@@ -17,6 +17,21 @@ Window {
     title: qsTr("GPT Translator")
 
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
+
+    MouseArea{
+       anchors.fill: parent
+       property variant clickPos: "1,1"
+
+       onPressed: {
+           clickPos  = Qt.point(mouseX ,mouseY)
+       }
+
+       onPositionChanged: {
+           var delta = Qt.point(mouseX -clickPos.x, mouseY-clickPos.y)
+           mainWindow.x += delta.x;
+           mainWindow.y += delta.y;
+       }
+   }
     Item{
         anchors.fill: parent
         focus: true
@@ -31,7 +46,7 @@ Window {
         SystemTrayIcon {
             id: trayIcon
             visible:true
-            icon.source: "qrc:///res/language-solid.svg"
+            icon.source: (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"qrc:///res/language-solid.svg":"qrc:///res/logo/logo.png"
             // create menu for status bar
 
             menu: Menu {

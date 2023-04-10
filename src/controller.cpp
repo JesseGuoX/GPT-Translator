@@ -4,6 +4,9 @@ using namespace std;
 
 Setting::Setting(QObject * parent): QObject{parent}
 {
+
+    //win C:\Users\xxxx\AppData\Local\GPT_Translator
+    //macos /Users/xxx/Library/Preferences/GPT_Translator/
     _configPath = QStandardPaths::locate(QStandardPaths::AppConfigLocation, "config.json", QStandardPaths::LocateFile);
     if(_configPath == ""){
         if(QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation).length() > 0){

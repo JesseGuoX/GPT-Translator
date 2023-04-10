@@ -40,6 +40,10 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
+
+        qt_add_executable(GPT_Translator
+            ${SOURCES} ${HEADERS} ${RESOURCES}
+        )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin")
 

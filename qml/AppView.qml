@@ -155,7 +155,7 @@ Item {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
+                    mainWindow.flags = mainWindow.flags & (0xFFFFFFFF ^ Qt.WindowStaysOnTopHint)
                     tItem.state = "no"
 
                 }
