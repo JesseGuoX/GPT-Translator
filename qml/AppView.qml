@@ -50,7 +50,7 @@ Item {
         anchors.right:parent.right
         anchors.margins: 15
 
-        height:50
+        height:30
 
         GRadioGroup{
             id:transRadio
@@ -85,7 +85,7 @@ Item {
             width: 18
             height:18
             anchors.right: parent.right
-            anchors.top: parent.top
+            anchors.verticalCenter: transRadio.verticalCenter
             normalUrl:"qrc:///res/setting.svg"
             hoveredUrl:"qrc:///res/setting.svg"
             pressedUrl:"qrc:///res/setting.svg"
@@ -93,46 +93,6 @@ Item {
                 settingClicked();
             }
         }
-
-        Item{
-            id:tItem
-            width: 22
-            height:22
-            anchors.horizontalCenter: settingBtn.horizontalCenter
-            anchors.top: settingBtn.bottom
-            anchors.topMargin: 10
-            state:"no"
-            Image{
-                id:tyes
-                anchors.fill: parent
-                source:"qrc:///res/thumbtack_yes.png"
-                visible:tItem.state === "yes"
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: {
-                        mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
-                        tItem.state = "no"
-
-                    }
-                }
-            }
-            Image{
-                id:tyno
-                anchors.fill: parent
-                source:"qrc:///res/thumbtack_no.png"
-                visible:tItem.state === "no"
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: {
-                        mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
-                        tItem.state = "yes"
-
-                    }
-                }
-            }
-        }
-
-
 
     }
 
@@ -159,6 +119,43 @@ Item {
         }
     }
 
+    Item{
+        id:tItem
+        width: 22
+        height:22
+        anchors.top: inputItem.bottom
+        anchors.topMargin: 10
+        anchors.right:inputItem.right
+        state:"no"
+        Image{
+            id:tyes
+            anchors.fill: parent
+            source:"qrc:///res/thumbtack_yes.png"
+            visible:tItem.state === "yes"
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    mainWindow.flags = mainWindow.flags & (0xFFFFFF ^ Qt.WindowStaysOnTopHint)
+                    tItem.state = "no"
+
+                }
+            }
+        }
+        Image{
+            id:tyno
+            anchors.fill: parent
+            source:"qrc:///res/thumbtack_no.png"
+            visible:tItem.state === "no"
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
+                    tItem.state = "yes"
+
+                }
+            }
+        }
+    }
 
     Text{
         id:indictor
@@ -167,7 +164,7 @@ Item {
         anchors.top:inputItem.bottom
         font.bold: true
         color:"green"
-        anchors.topMargin: 30
+        anchors.topMargin: 35
 
     }
 
