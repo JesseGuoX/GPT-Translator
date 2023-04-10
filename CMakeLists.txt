@@ -37,9 +37,9 @@ set(RESOURCES
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
-        qt_add_executable(GPT_Translator
-            ${SOURCES} ${HEADERS} ${RESOURCES}
-        )
+    qt_add_executable(GPT_Translator
+        ${SOURCES} ${HEADERS} ${RESOURCES}
+    )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
     set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.rc")

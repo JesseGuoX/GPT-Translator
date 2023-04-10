@@ -46,7 +46,7 @@ jobs:
       - name: build ubuntu
         run: |
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
-          make
+          make -C ${{github.workspace}}/build
       - name: install QT linux deploy
         uses: miurahr/install-linuxdeploy-action@v1
         with:
@@ -59,7 +59,7 @@ jobs:
           # make sure Qt plugin finds QML sources so it can deploy the imported files
           export QML_SOURCES_PATHS=src
           # 拷贝依赖
-          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${targetName}.svg --executable=bin/release/${targetName} --appdir bin/release/
+          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${targetName}.svg --executable=build/${targetName} --appdir build/
           mv ${{ env.targetName }}-*.AppImage ${{ env.targetName }}.AppImage
       # 上传artifacts          
       - uses: actions/upload-artifact@v2

@@ -42,24 +42,24 @@ jobs:
       - name: build macos
         run: |
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
-          make
+          make -C ${{github.workspace}}/build
       # 打包
       - name: package
         run: |
           # 拷贝依赖
-          macdeployqt bin/release/${targetName}.app -qmldir=. -verbose=1 -dmg
+          macdeployqt build/${targetName}.app -qmldir=. -verbose=1 -dmg
       # 上传artifacts          
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.targetName }}_${{ matrix.os }}_${{matrix.qt_ver}}.zip
-          path: bin/release/${{ env.targetName }}.app
+          path: build/${{ env.targetName }}.app
       # tag 上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/release/${{ env.targetName }}.dmg
+          file: build/${{ env.targetName }}.dmg
           asset_name: ${{ env.targetName }}_${{  github.ref_name }}_${{ matrix.os }}_Qt${{ matrix.qt_ver }}.dmg
           tag: ${{ github.ref }}
           overwrite: true
