@@ -45,7 +45,6 @@ jobs:
           fetch-depth: 1
       - name: build ubuntu
         run: |
-          qmake
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
           make
       - name: install QT linux deploy
