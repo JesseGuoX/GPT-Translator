@@ -9,12 +9,14 @@ Flickable {
     property alias readOnly: textedit.readOnly
     property alias textedit: textedit
 
+
     contentWidth: width;
     contentHeight: textedit.height
     flickableDirection: Flickable.VerticalFlick
     clip: true
     function scrollToBottom() {
-        flick.contentY = flick.contentHeight - flick.height
+        if(flick.contentHeight - flick.height >= 0)
+            flick.contentY = flick.contentHeight - flick.height
     }
     ScrollBar.vertical:ScrollBar {
         id: scrollbar
@@ -26,10 +28,7 @@ Flickable {
         width:10
         orientation: Qt.Vertical
         size: flick.height / flick.contentHeight
-        position: flick.contentY / flick.contentHeight
-        onPositionChanged: {
-            flick.contentY = position * flick.contentHeight
-        }
+
     }
 
     onContentHeightChanged: {
