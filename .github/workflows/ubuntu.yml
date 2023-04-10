@@ -22,7 +22,7 @@ jobs:
         qt_ver: [6.5.0]
         qt_arch: [gcc_64]
     env:
-      targetName: GPT_Translator
+      targetName: GPT_Translator.bin
       BUILD_TYPE:  Release
       iconFile: ${{github.workspace}}/res/logo/logo.ico
     steps:
