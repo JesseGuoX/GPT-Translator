@@ -47,7 +47,7 @@ jobs:
         run: |
           Get-Command -Name 'qmake' | Format-List
           Get-Command -Name 'mingw32-make' | Format-List
-          Get-Command -Name 'cmake' | Format-List
+          Get-Command -Name 'cmake' | Format-List 
       - name: mingw-build
         id: build
         shell: cmd
