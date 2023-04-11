@@ -100,9 +100,9 @@ Item {
             height:18
             anchors.right: parent.right
             anchors.verticalCenter: transRadio.verticalCenter
-            normalUrl:"qrc:///res/setting.svg"
-            hoveredUrl:"qrc:///res/setting.svg"
-            pressedUrl:"qrc:///res/setting.svg"
+            normalUrl:"qrc:///res/setting1.png"
+            hoveredUrl:"qrc:///res/setting1.png"
+            pressedUrl:"qrc:///res/setting2.png"
             onClicked: {
                 settingClicked();
             }
@@ -194,9 +194,9 @@ Item {
         height:18
         anchors.verticalCenter: indictor.verticalCenter
         anchors.right: inputItem.right
-        normalUrl:"qrc:///res/speaker.svg"
-        hoveredUrl:"qrc:///res/speaker.svg"
-        pressedUrl:"qrc:///res/speaker.svg"
+        normalUrl:"qrc:///res/speak1.png"
+        hoveredUrl:"qrc:///res/speak1.png"
+        pressedUrl:"qrc:///res/speak2.png"
         visible:speekDisplay()
         onClicked: {
             if(getMode() === 1){
