@@ -43,7 +43,8 @@ Item {
     }
 
     Component.onCompleted: {
-        inputAni.restart()
+        inputAni.to = root.height /3
+        inputAni.start()
     }
 
 

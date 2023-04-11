@@ -52,7 +52,7 @@ jobs:
         id: build
         shell: cmd
         run: |
-          cmake -B ${{github.workspace}}\build  -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} -DIS_MINGW
+          cmake -B ${{github.workspace}}\build  -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} -DIS_MINGW=1
           mingw32-make  -C ${{github.workspace}}/build
       - name: package
         id: package      
