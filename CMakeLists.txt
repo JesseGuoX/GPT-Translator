@@ -44,7 +44,7 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
 
-    set(CMAKE_EXE_LINKER_FLAGS "-static")
+    # set(CMAKE_EXE_LINKER_FLAGS "-static") use target_link_libraries instead
     set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/res/logo/logo.rc")
     qt_add_executable(GPT_Translator ${app_icon_resource_windows}
         ${SOURCES} ${HEADERS} ${RESOURCES}
@@ -87,20 +87,26 @@ include_directories("src")
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
-
-target_link_libraries(GPT_Translator
-    PRIVATE
-    Qt6::Quick
-    Qt6::TextToSpeech
-    -static gcc stdc++ winpthread -dynamic
-    )
-
+    if(DEFINED IS_MINGW)
+    target_link_libraries(GPT_Translator
+        PRIVATE
+        Qt6::Quick
+        Qt6::TextToSpeech
+        -static gcc stdc++ winpthread -dynamic
+        )
+    else()
+    target_link_libraries(GPT_Translator
+        PRIVATE
+        Qt6::Quick
+        Qt6::TextToSpeech
+        )
+    endif()
 ELSE()
-target_link_libraries(GPT_Translator
-    PRIVATE
-    Qt6::Quick
-    Qt6::TextToSpeech
-    )
+    target_link_libraries(GPT_Translator
+        PRIVATE
+        Qt6::Quick
+        Qt6::TextToSpeech
+        )
 ENDIF()
 
 install(TARGETS GPT_Translator
