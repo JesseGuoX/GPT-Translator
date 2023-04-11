@@ -47,11 +47,12 @@ jobs:
         run: |
           Get-Command -Name 'qmake' | Format-List
           Get-Command -Name 'mingw32-make' | Format-List
+          Get-Command -Name 'cmake' | Format-List
       - name: mingw-build
         id: build
         shell: cmd
         run: |
-          cmake -B ${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
+          cmake -B ${{github.workspace}}\build  -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
           mingw32-make  -C ${{github.workspace}}/build
       - name: package
         id: package      
