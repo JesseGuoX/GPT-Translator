@@ -24,7 +24,7 @@ jobs:
     env:
       targetName: GPT_Translator
       BUILD_TYPE:  Release
-      iconFile: logo512.png
+      iconFile: GPT_Translator.png
     steps:
       - name: '⚙️ Cache Qt'
         id: cache-qt
@@ -60,7 +60,7 @@ jobs:
           # make sure Qt plugin finds QML sources so it can deploy the imported files
           export QML_SOURCES_PATHS=qml
           # 拷贝依赖
-          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=GPT_Translator.png --executable=build/${targetName} --appdir build/
+          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${iconFile} --executable=build/${targetName} --appdir build/
           mv ${{ env.targetName }}-*.AppImage ${{ env.targetName }}.AppImage
       # 上传artifacts          
       - uses: actions/upload-artifact@v2
