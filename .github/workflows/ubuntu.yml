@@ -24,7 +24,7 @@ jobs:
     env:
       targetName: GPT_Translator
       BUILD_TYPE:  Release
-      iconFile: ${{github.workspace}}/res/logo/logo.png
+      iconFile: ${{github.workspace}}/res/logo/logo512.png
     steps:
       - name: '⚙️ Cache Qt'
         id: cache-qt
