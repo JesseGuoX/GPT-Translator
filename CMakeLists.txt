@@ -16,7 +16,10 @@ endif()
 
 
 find_package(Qt6 REQUIRED COMPONENTS Quick TextToSpeech)
-qt6_policy(SET QTP0001 OLD)
+if(Qt6_VERSION_MAJOR EQUAL 6 AND Qt6_VERSION_MINOR GREATER_EQUAL 5)
+    qt6_policy(SET QTP0001 OLD)
+endif()
+
 
 set(HEADERS
     src/controller.h
