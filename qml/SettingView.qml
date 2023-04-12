@@ -219,7 +219,7 @@ Item {
                 height: 40
                 anchors.horizontalCenter: parent.horizontalCenter
                 Material.background: Material.Green
-                Material.foreground :"white"
+                Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
                 onClicked: {
                     updater.check()
                 }

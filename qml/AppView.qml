@@ -6,6 +6,7 @@ import QtTextToSpeech
 
 import QtQuick.Controls.Material
 import "."
+
 Item {
     id:root
     signal settingClicked;
@@ -229,8 +230,7 @@ Item {
         }
         height:50
         Material.background: Material.Green
-        Material.foreground :"white"
-
+        Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
     }
     BusyIndicator {
         anchors.verticalCenter: stopBtn.verticalCenter
@@ -252,7 +252,7 @@ Item {
             api.abort()
         }
         Material.background: Material.Green
-        Material.foreground :"white"
+        Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
     }
 
     ComboBox {
