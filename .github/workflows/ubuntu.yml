@@ -48,7 +48,7 @@ jobs:
         run: |
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
           make -C ${{github.workspace}}/build
-      - name: install QT linux deploy 
+      - name: install QT linux deploy
         uses: miurahr/install-linuxdeploy-action@v1
         with:
           plugins: qt appimage
