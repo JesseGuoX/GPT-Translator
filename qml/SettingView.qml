@@ -34,9 +34,9 @@ Item {
             height:20
             anchors.left: parent.left
             anchors.top: parent.top
-            normalUrl:"qrc:///res/back.svg"
-            hoveredUrl:"qrc:///res/back.svg"
-            pressedUrl:"qrc:///res/back.svg"
+            normalUrl:"qrc:///res/back1.png"
+            hoveredUrl:"qrc:///res/back1.png"
+            pressedUrl:"qrc:///res/back2.png"
             onClicked: {
                 backClicked();
             }
@@ -51,9 +51,9 @@ Item {
             visible:false
             anchors.right: parent.right
             anchors.top: parent.top
-            normalUrl:"qrc:///res/save.svg"
-            hoveredUrl:"qrc:///res/save.svg"
-            pressedUrl:"qrc:///res/save.svg"
+            normalUrl:"qrc:///res/save1.png"
+            hoveredUrl:"qrc:///res/save1.png"
+            pressedUrl:"qrc:///res/save2.png"
             onClicked: {
                 setting.apiServer = serverInput.text.trim()
                 setting.apiKey = keyInput.text
@@ -219,7 +219,7 @@ Item {
                 height: 40
                 anchors.horizontalCenter: parent.horizontalCenter
                 Material.background: Material.Green
-                Material.foreground :"white"
+                Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
                 onClicked: {
                     updater.check()
                 }

@@ -3,13 +3,17 @@ on:
   # push代码时触发workflow
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/windows.yml'
+    tags:
+      - v*
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/windows.yml' 
 jobs:
   build:
@@ -22,13 +26,14 @@ jobs:
       matrix:
         os: [windows-2019]
         include:
-          - qt_ver: 6.4.3          
+          - qt_ver: 6.5.0          
             qt_arch: win64_msvc2019_64
             msvc_arch: x64
             qt_arch_install: msvc2019_64          
     env:
       targetName: GPT_Translator.exe
       fileName: GPT_Translator
+      BUILD_TYPE:  Release
     # 步骤
     steps:
       - name: '⚙️ Cache Qt'
@@ -45,7 +50,7 @@ jobs:
           version: ${{ matrix.qt_ver }}
           arch: ${{ matrix.qt_arch }}
           cache: ${{steps.cache-qt.outputs.cache-hit}}
-          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats'
+          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats qtspeech'
       # 拉取代码
       - uses: actions/checkout@v2
         with:
@@ -56,8 +61,11 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
-          qmake
-          nmake
+          cmake -B ${{github.workspace}}\build  -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} 
+          dir ${{github.workspace}}\build\
+          dir ${{github.workspace}}\build\CMakeFiles
+          cd build
+          nmake 
           echo winSdkDir=%WindowsSdkDir% >> %GITHUB_ENV%
           echo winSdkVer=%WindowsSdkVersion% >> %GITHUB_ENV%
           echo vcToolsInstallDir=%VCToolsInstallDir% >> %GITHUB_ENV%

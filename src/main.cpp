@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-06 20:58:59
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-07 15:50:13
+ * @LastEditTime: 2023-04-12 13:12:19
  * @FilePath: /GPT_Translator/src/main.cpp
  */
 #include <QGuiApplication>
@@ -13,8 +13,14 @@
 #include "controller.h"
 #include "updater.h"
 #include <QIcon>
+
+#include <QSysInfo>
 int main(int argc, char *argv[])
 {
+    QString type = QSysInfo::productType();
+     if((type != "macos") && (type != "windows")){
+        qputenv("QT_QUICK_BACKEND","software");//Failed to build graphics pipeline state under linux, need to be software
+     }
 
     QGuiApplication app(argc, argv);
     app.setWindowIcon(QIcon("qrc:///res/logo/logo.ico"));

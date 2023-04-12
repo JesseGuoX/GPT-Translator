@@ -7,10 +7,6 @@
         <file>qml/AppView.qml</file>
         <file>res/language-solid.svg</file>
         <file>qml/IconButton.qml</file>
-        <file>res/setting.svg</file>
-        <file>res/back.svg</file>
-        <file>res/save.svg</file>
-        <file>res/speaker.svg</file>
         <file>res/thumbtack_no.png</file>
         <file>res/thumbtack_yes.png</file>
         <file>res/logo/logo.icns</file>
@@ -18,5 +14,13 @@
         <file>res/logo/logo.png</file>
         <file>qml/GTextEdit.qml</file>
         <file>qml/GRadioGroup.qml</file>
+        <file>res/back1.png</file>
+        <file>res/back2.png</file>
+        <file>res/save1.png</file>
+        <file>res/save2.png</file>
+        <file>res/setting1.png</file>
+        <file>res/setting2.png</file>
+        <file>res/speak1.png</file>
+        <file>res/speak2.png</file>
     </qresource>
 </RCC>
