@@ -92,7 +92,7 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
-        -static gcc stdc++ winpthread -dynamic
+        -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,-Bdynamic
         )
     else()
     target_link_libraries(GPT_Translator
