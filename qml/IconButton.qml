@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 Item {
     id: root
     width: 100
@@ -42,24 +41,7 @@ Item {
         sourceSize.height: root.height * 2
         //默认按鼠标状态选取不同的图片
         source: getSource()
-        ColorOverlay{
-            id:overlay
-            anchors.fill: img
-            source:img
-            color:"green"
-            transform:rotation
-            antialiasing: true
-        }
-        ColorOverlay{
-            id:overlay2
-            visible:false
-            anchors.fill: overlay
-            source:overlay
-            color:"grey"
-            transform:rotation
-            antialiasing: true
-            opacity:0.7
-        }
+
     }
 
     MouseArea {
@@ -71,23 +53,7 @@ Item {
             if(checkable)
                 checked = !checked
         }
-        onPressed: {
-           if(checkable){
-                overlay2.visible = false
-           }else{
-                overlay2.visible = true
-           }
 
-        }
-        onReleased: {
-            if(checkable){
-                overlay2.visible = false
-            }else{
-             overlay2.visible = false
-            }
-
-
-        }
 
         cursorShape: Qt.PointingHandCursor
         preventStealing: true

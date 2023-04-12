@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/ubuntu.yml'
+    tags:
+      - v*
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/ubuntu.yml' 
 jobs:
   build:
@@ -23,6 +27,8 @@ jobs:
         qt_arch: [gcc_64]
     env:
       targetName: GPT_Translator
+      BUILD_TYPE:  Release
+      iconFile: GPT_Translator.png
     steps:
       - name: '⚙️ Cache Qt'
         id: cache-qt
@@ -36,29 +42,29 @@ jobs:
           version: ${{ matrix.qt_ver }}
           cache: ${{steps.cache-qt.outputs.cache-hit}}
           arch: ${{ matrix.qt_arch }}
-          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats'
+          modules: 'qt5compat qtmultimedia qtshadertools qtimageformats qtspeech'
       - name: ubuntu install GL library
-        run: sudo apt-get install -y libglew-dev libglfw3-dev qml-module-qtquick-controls qml-module-qtquick-controls2
+        run: sudo apt-get install -y libglew-dev libglfw3-dev qml-module-qtquick-controls qml-module-qtquick-controls2 libxcb-xinput0 libxcb-cursor0
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: build ubuntu
         run: |
-          qmake
-          make
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
+          make -C ${{github.workspace}}/build
       - name: install QT linux deploy
         uses: miurahr/install-linuxdeploy-action@v1
         with:
           plugins: qt appimage
       - name: Check if svg file exists
-        run: if [ ! -f "${targetName}.svg" ]; then echo "File not found, creating..."; touch ${targetName}.svg; fi
+        run: if [ ! -f "${iconFile}" ]; then echo "File not found, creating..."; touch ${iconFile}; fi
       # 打包
       - name: package
         run: |
           # make sure Qt plugin finds QML sources so it can deploy the imported files
-          export QML_SOURCES_PATHS=src
+          export QML_SOURCES_PATHS=qml
           # 拷贝依赖
-          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${targetName}.svg --executable=bin/release/${targetName} --appdir bin/release/
+          linuxdeploy-x86_64.AppImage --plugin=qt --output=appimage --create-desktop-file --icon-file=${iconFile} --executable=build/${targetName} --appdir build/
           mv ${{ env.targetName }}-*.AppImage ${{ env.targetName }}.AppImage
       # 上传artifacts          
       - uses: actions/upload-artifact@v2

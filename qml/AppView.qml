@@ -6,6 +6,7 @@ import QtTextToSpeech
 
 import QtQuick.Controls.Material
 import "."
+
 Item {
     id:root
     signal settingClicked;
@@ -42,9 +43,6 @@ Item {
         rate: 0
     }
 
-    Component.onCompleted: {
-        inputAni.restart()
-    }
 
 
     Item{
@@ -100,9 +98,9 @@ Item {
             height:18
             anchors.right: parent.right
             anchors.verticalCenter: transRadio.verticalCenter
-            normalUrl:"qrc:///res/setting.svg"
-            hoveredUrl:"qrc:///res/setting.svg"
-            pressedUrl:"qrc:///res/setting.svg"
+            normalUrl:"qrc:///res/setting1.png"
+            hoveredUrl:"qrc:///res/setting1.png"
+            pressedUrl:"qrc:///res/setting2.png"
             onClicked: {
                 settingClicked();
             }
@@ -116,7 +114,6 @@ Item {
         anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height/3
         clip:true
         Rectangle {
             radius: 6
@@ -133,10 +130,9 @@ Item {
         }
         NumberAnimation on height {
             id:inputAni
-            to: parent.height/3
+            to: root.height/3
             duration:200
         }
-
     }
 
     Item{
@@ -194,9 +190,9 @@ Item {
         height:18
         anchors.verticalCenter: indictor.verticalCenter
         anchors.right: inputItem.right
-        normalUrl:"qrc:///res/speaker.svg"
-        hoveredUrl:"qrc:///res/speaker.svg"
-        pressedUrl:"qrc:///res/speaker.svg"
+        normalUrl:"qrc:///res/speak1.png"
+        hoveredUrl:"qrc:///res/speak1.png"
+        pressedUrl:"qrc:///res/speak2.png"
         visible:speekDisplay()
         onClicked: {
             if(getMode() === 1){
@@ -234,8 +230,7 @@ Item {
         }
         height:50
         Material.background: Material.Green
-        Material.foreground :"white"
-
+        Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
     }
     BusyIndicator {
         anchors.verticalCenter: stopBtn.verticalCenter
@@ -257,7 +252,7 @@ Item {
             api.abort()
         }
         Material.background: Material.Green
-        Material.foreground :"white"
+        Material.foreground :(Qt.platform.os === "linux")?"black":"white" //linux can't display button use software render
     }
 
     ComboBox {

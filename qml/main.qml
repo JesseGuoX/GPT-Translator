@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 import QtQuick.Layouts
 import Qt.labs.platform
-//import QtGraphicalEffects
+
 import "."
 
 
@@ -73,6 +73,7 @@ Window {
             interactive: false
             AppView{
                 id:appView
+                height:mainWindow.height
                 onSettingClicked: {
                     settingView.reload()
                     swipeView.currentIndex = 1
