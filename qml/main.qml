@@ -73,6 +73,7 @@ Window {
             interactive: false
             AppView{
                 id:appView
+                height:mainWindow.height
                 onSettingClicked: {
                     settingView.reload()
                     swipeView.currentIndex = 1

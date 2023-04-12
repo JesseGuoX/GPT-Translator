@@ -42,10 +42,6 @@ Item {
         rate: 0
     }
 
-    Component.onCompleted: {
-        inputAni.to = root.height /3
-        inputAni.start()
-    }
 
 
     Item{
@@ -117,7 +113,6 @@ Item {
         anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height/3
         clip:true
         Rectangle {
             radius: 6
@@ -134,10 +129,9 @@ Item {
         }
         NumberAnimation on height {
             id:inputAni
-            to: parent.height/3
+            to: root.height/3
             duration:200
         }
-
     }
 
     Item{
