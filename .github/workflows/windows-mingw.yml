@@ -60,7 +60,7 @@ jobs:
           archiveName: ${{ env.fileName }}-${{ matrix.qt_arch }}-${{ matrix.qt_ver }}
         shell: pwsh
         run: |
-          & scripts\windows-mingw-publish.ps1 ${env:archiveName} ${env:targetName}
+          & scripts\windows-mingw-publish.ps1 ${env:archiveName} ${env:targetName} ${env:Qt6_DIR}
            $name = ${env:archiveName}
            echo "::set-output name=packageName::$name"       
       - uses: actions/upload-artifact@v2

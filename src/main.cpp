@@ -14,13 +14,13 @@
 #include "updater.h"
 #include <QIcon>
 
-
+#include <QSysInfo>
 int main(int argc, char *argv[])
 {
     QString type = QSysInfo::productType();
-    // if(type == "linux"){
+     if((type != "macos") && (type != "windows")){
         qputenv("QT_QUICK_BACKEND","software");//Failed to build graphics pipeline state under linux, need to be software
-    // }
+     }
 
     QGuiApplication app(argc, argv);
     app.setWindowIcon(QIcon("qrc:///res/logo/logo.ico"));
