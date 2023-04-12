@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/ubuntu.yml'
+    tags:
+      - v*
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/ubuntu.yml' 
 jobs:
   build:

@@ -3,13 +3,17 @@ on:
   # push代码时触发workflow
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/windows.yml'
+    tags:
+      - v*
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/windows.yml' 
 jobs:
   build:

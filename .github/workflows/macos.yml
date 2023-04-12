@@ -2,13 +2,17 @@ name: MacOS
 on: 
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/macos.yml'
+    tags:
+      - v*
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'qml/**'
       - '.github/workflows/macos.yml' 
 jobs:
   build:
