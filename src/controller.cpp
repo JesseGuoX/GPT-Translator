@@ -4,7 +4,9 @@ using namespace std;
 
 Setting::Setting(QObject * parent): QObject{parent}
 {
-
+    _apiServer = "";
+    _apiKey = "";
+    _model = "";
     //win C:\Users\xxxx\AppData\Local\GPT_Translator
     //macos /Users/xxx/Library/Preferences/GPT_Translator/
     _configPath = QStandardPaths::locate(QStandardPaths::AppConfigLocation, "config.json", QStandardPaths::LocateFile);
@@ -73,6 +75,13 @@ void Setting::updateConfig()
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {
+    _responseData = "";
+    _responseError = "";
+    _transToLang = "";
+    _isRequesting = false;
+    _apiServer = "";
+    _apiKey = "";
+    _model = "";
     networkManager = new QNetworkAccessManager(this);
 
 }

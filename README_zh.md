@@ -1,8 +1,8 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 22:57:10
- * @FilePath: /GPT_Translator/README.md
+ * @LastEditTime: 2023-04-13 22:57:30
+ * @FilePath: /GPT_Translator/README_zh.md
 -->
 
 <p align="center">
@@ -27,7 +27,7 @@
   </a>
 </p>
 
-[中文](https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/README_zh.md)
+[English](https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/README.md)
 
 # GPT-Translator
 
@@ -37,27 +37,26 @@
   </a>
 </p>
 
-  GPT-Translator is a simple translation client that uses the OpenAI API(currently), more GPT api will be supported in the future.
+  GPT-Translator 是一个简单的通过 OpenAI API 进行翻译的客户端, 未来会支持更多 GPT API 的集成。
 
 
-# Features
+# 特性
+
+1. 三个简单的模式：翻译、字典和语法。
+2. 支持流式输出。
+3. 支持文字转语音（TTS，只支持英语）。
+4. 支持三大平台 (Windows, macOS, and Linux)!
+5. 支持自定义服务器地址!
+6. 支持【总是最前】模式!
+
+# 如何使用
+
+  输入需要翻译的内容按 cmd+R(macos) 或者 Ctrl+R(Windows,Linux) 开始翻译.
 
 
-1. Three simple mode: translation, dictionary and grammar.
-2. Streaming mode is supported!
-3. Text-to-Speech (TTS, English Only)!
-4. Available on all platforms (Windows, macOS, and Linux)!
-5. Support custom servers!
-6. Always-On-Top is supported!
+# 安装
 
-# How to use
-
-  Type any word or sentence then press cmd+R(macos) or Ctrl+R(Windows,Linux) to translate.
-
-
-# Installation
-
-To install GPT-Translator, download the [latest version](https://github.com/JesseGuoX/GPT-Translator/releases/latest) for your operating system. GPT-Translator is available on Mac, Windows, and Linux.
+ 安装 GPT-Translator, 在[最新的发布](https://github.com/JesseGuoX/GPT-Translator/releases/latest) 中获取下载。 GPT-Translator 当前支持 Mac, Windows, and Linux.
 
 # License
 
