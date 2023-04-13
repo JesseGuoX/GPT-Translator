@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 23:33:52
+ * @LastEditTime: 2023-04-13 23:36:42
  * @FilePath: /GPT_Translator/README_zh.md
 -->
 
@@ -27,7 +27,10 @@
   </a>
 </p>
 
-[English](https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/README.md)
+
+<p align="center">
+    <br> <a href="README.md">English</a> | 中文
+</p>
 
 # GPT-Translator
 
