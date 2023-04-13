@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 22:57:30
+ * @LastEditTime: 2023-04-13 23:07:45
  * @FilePath: /GPT_Translator/README_zh.md
 -->
 
@@ -31,13 +31,14 @@
 
 # GPT-Translator
 
+  GPT-Translator 是一个简单的通过 OpenAI API 进行翻译的客户端, 未来会支持更多 GPT API 的集成。
+
 <p align="center">
   <a  target="_blank">
-    <img alt="logo" width="128px" height="128px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
+    <img alt="logo" width="512px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
   </a>
 </p>
 
-  GPT-Translator 是一个简单的通过 OpenAI API 进行翻译的客户端, 未来会支持更多 GPT API 的集成。
 
 
 # 特性

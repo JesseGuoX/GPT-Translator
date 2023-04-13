@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 22:57:10
+ * @LastEditTime: 2023-04-13 23:07:14
  * @FilePath: /GPT_Translator/README.md
 -->
 
@@ -31,13 +31,14 @@
 
 # GPT-Translator
 
+  GPT-Translator is a simple translation client that uses the OpenAI API(currently), more GPT api will be supported in the future.
+
 <p align="center">
   <a  target="_blank">
-    <img alt="logo" width="128px" height="128px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
+    <img alt="logo" width="512px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
   </a>
 </p>
 
-  GPT-Translator is a simple translation client that uses the OpenAI API(currently), more GPT api will be supported in the future.
 
 
 # Features
