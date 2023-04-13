@@ -6,8 +6,6 @@ on:
       - 'src/**'
       - 'qml/**'
       - '.github/workflows/macos.yml'
-    tags:
-      - v*
   pull_request:
     paths:
       - 'CMakeLists.txt'
