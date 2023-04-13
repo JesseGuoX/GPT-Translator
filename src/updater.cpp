@@ -1,8 +1,18 @@
+/*
+ * @Date: 2023-04-10 19:41:40
+ * @LastEditors: JessGuo
+ * @LastEditTime: 2023-04-13 22:48:24
+ * @FilePath: /GPT_Translator/src/updater.cpp
+ */
 #include "updater.h"
 
 Updater::Updater(QObject *parent)
     : QObject{parent}
 {
+    _isRequesting = false;
+    _requestResult = "";
+    _updateLink = "";
+    _releaseNote = "";
     networkManager = new QNetworkAccessManager(this);
 }
 

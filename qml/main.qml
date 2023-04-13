@@ -46,7 +46,7 @@ Window {
         SystemTrayIcon {
             id: trayIcon
             visible:true
-            icon.source: (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"qrc:///res/language-solid.svg":"qrc:///res/logo/logo.png"
+            icon.source: (Qt.platform.os === "macos" || Qt.platform.os === "osx")?"qrc:///res/tray.png":"qrc:///res/logo/logo.png"
             // create menu for status bar
 
             menu: Menu {
@@ -60,8 +60,9 @@ Window {
             }
 
             onActivated:{
-                console.log("hjello")
+                mainWindow.show()
                 mainWindow.raise()
+                mainWindow.requestActivate()
             }
         }
 

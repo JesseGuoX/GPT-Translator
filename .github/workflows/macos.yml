@@ -6,8 +6,6 @@ on:
       - 'src/**'
       - 'qml/**'
       - '.github/workflows/macos.yml'
-    tags:
-      - v*
   pull_request:
     paths:
       - 'CMakeLists.txt'
@@ -45,7 +43,7 @@ jobs:
           fetch-depth: 1
       - name: build macos
         run: |
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} -DAPP_VERSION=${{  github.ref_name }}
           make -C ${{github.workspace}}/build
       # 打包
       - name: package
@@ -56,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.targetName }}_${{ matrix.os }}_${{matrix.qt_ver}}.zip
-          path: build/${{ env.targetName }}.app
+          path: build/${{ env.targetName }}.dmg
       # tag 上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')
