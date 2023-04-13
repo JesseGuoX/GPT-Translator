@@ -8,8 +8,6 @@ on:
       - 'src/**'
       - 'qml/**'
       - '.github/workflows/ubuntu.yml'
-    tags:
-      - v*
   pull_request:
     paths:
       - 'CMakeLists.txt'

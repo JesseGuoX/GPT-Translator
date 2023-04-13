@@ -6,8 +6,6 @@ on:
       - 'src/**'
       - 'qml/**'
       - '.github/workflows/windows-mingw.yml'
-    tags:
-      - v*
   pull_request:
     paths:
       - 'CMakeLists.txt'

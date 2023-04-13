@@ -1,14 +1,14 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-12 23:10:31
+ * @LastEditTime: 2023-04-13 22:32:58
  * @FilePath: /GPT_Translator/README.md
 -->
 
 <p align="center">
  
   <a  target="_blank">
-    <img alt="logo" width="256px" height="256px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/GPT_Translator.png" />
+    <img alt="logo" width="128px" height="128px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/GPT_Translator.png" />
   </a>
 </p>
 
