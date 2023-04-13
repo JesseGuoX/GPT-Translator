@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 23:07:45
+ * @LastEditTime: 2023-04-13 23:33:52
  * @FilePath: /GPT_Translator/README_zh.md
 -->
 
@@ -52,7 +52,35 @@
 
 # 如何使用
 
-  输入需要翻译的内容按 cmd+R(macos) 或者 Ctrl+R(Windows,Linux) 开始翻译.
+## Windows 和 Linux
+
+  1. 解压压缩包，并点击可执行文件。
+  2. 输入需要翻译的内容按 cmd+R(macos) 或者 Ctrl+R(Windows,Linux) 开始翻译.
+
+## macos
+
+
+  * 由于 macos 的隐私策略，你需要手动打开 GPT-Translator 的权限。
+  
+<p align="center">
+  <a  target="_blank">
+    <img  width="300px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/verfiywarning.png" />
+  </a>
+</p>
+
+  * 点击弹出的窗口中的 `取消` 按钮，然后打开系统偏好设置中的安全性与隐私设置。
+  
+<p align="center">
+  <a  target="_blank">
+    <img  width="500px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/p&s.png" />
+  </a>
+</p>
+
+  * 点击`始终打开` 按钮，然后再弹出的对话框中点击`打开`， 再次打开 GPT-Translator。然后就可以正常使用了。
+
+  * 输入需要翻译的内容按 cmd+R(macos) 或者 Ctrl+R(Windows,Linux) 开始翻译。
+
+ **如果有任何其他问题，欢迎提交 issue。**
 
 
 # 安装

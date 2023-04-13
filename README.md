@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 23:07:14
+ * @LastEditTime: 2023-04-13 23:34:51
  * @FilePath: /GPT_Translator/README.md
 -->
 
@@ -35,7 +35,7 @@
 
 <p align="center">
   <a  target="_blank">
-    <img alt="logo" width="512px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
+    <img  width="512px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
   </a>
 </p>
 
@@ -53,7 +53,34 @@
 
 # How to use
 
-  Type any word or sentence then press cmd+R(macos) or Ctrl+R(Windows,Linux) to translate.
+## Windows and Linux
+  Unzip the file and run the executable file.
+
+## macos
+
+
+  * Beacuse of the security policy of macos, you need to open the security settings of the system to run the application.
+  
+<p align="center">
+  <a  target="_blank">
+    <img  width="300px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/verfiywarning.png" />
+  </a>
+</p>
+
+  * Click the `Cancel` button in the pop-up window, and then open the Security & Privacy settings in the System Preferences.
+  
+<p align="center">
+  <a  target="_blank">
+    <img  width="500px"  src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/p&s.png" />
+  </a>
+</p>
+
+  * Click the `Open Anyway` button in the pop-up window.Make sure click the `Open` button in next popup window. Then you can use it normally.
+
+
+  * Type any word or sentence then press cmd+R(macos) or Ctrl+R(Windows,Linux) to translate.
+
+**If you have any questions, please feel free to open an issue.**
 
 
 # Installation
