@@ -61,7 +61,7 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
-          cmake -B ${{github.workspace}}\build  -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} 
+          cmake -B ${{github.workspace}}\build  -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}}  -DAPP_VERSION=${{  github.ref_name }}
           dir ${{github.workspace}}\build\
           dir ${{github.workspace}}\build\CMakeFiles
           cd build

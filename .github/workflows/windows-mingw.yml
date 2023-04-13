@@ -56,7 +56,7 @@ jobs:
         id: build
         shell: cmd
         run: |
-          cmake -B ${{github.workspace}}\build  -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} -DIS_MINGW=1
+          cmake -B ${{github.workspace}}\build  -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{env.Qt6_DIR}} -DIS_MINGW=1 -DAPP_VERSION=${{  github.ref_name }}
           mingw32-make  -C ${{github.workspace}}/build
       - name: package
         id: package      
@@ -64,7 +64,7 @@ jobs:
           archiveName: ${{ env.fileName }}-${{ matrix.qt_arch }}-${{ matrix.qt_ver }}
         shell: pwsh
         run: |
-          & scripts\windows-mingw-publish.ps1 ${env:archiveName} ${env:targetName} ${env:Qt6_DIR}
+          & scripts\windows-mingw-publish.ps1 ${env:archiveName} ${env:targetName} ${env:Qt6_DIR} 
            $name = ${env:archiveName}
            echo "::set-output name=packageName::$name"       
       - uses: actions/upload-artifact@v2

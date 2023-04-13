@@ -1,14 +1,14 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-12 12:54:05
+ * @LastEditTime: 2023-04-12 23:10:31
  * @FilePath: /GPT_Translator/README.md
 -->
 
 <p align="center">
  
   <a  target="_blank">
-    <img alt="logo" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/GPT_Translator.png" />
+    <img alt="logo" width="256px" height="256px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/GPT_Translator.png" />
   </a>
 </p>
 
@@ -28,9 +28,9 @@
   </a>
 </p>
 
-# GPT_Translator
+# GPT-Translator
   
-  GPT_Translator is a simple translation client that uses the OpenAI API(currently), more GPT api  will be supported in the future.
+  GPT-Translator is a simple translation client that uses the OpenAI API(currently), more GPT api  will be supported in the future.
 
 
 # Features
@@ -39,7 +39,7 @@
 2. Streaming mode is supported!
 3. Text-to-Speech (TTS, English Only)
 4. Available on all platforms (Windows, macOS, and Linux)
-5. Supports custom servers
+5. Support custom servers
 
 # How to use
 
@@ -47,7 +47,7 @@
 
 # Installation
 
-To install GPT_Translator, download the [latest version](https://github.com/JesseGuoX/GPT-Translator/releases/latest) for your operating system. GPT_Translator is available on Mac, Windows, and Linux.
+To install GPT-Translator, download the [latest version](https://github.com/JesseGuoX/GPT-Translator/releases/latest) for your operating system. GPT-Translator is available on Mac, Windows, and Linux.
 
 # License
 

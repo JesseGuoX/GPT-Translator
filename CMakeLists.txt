@@ -9,6 +9,10 @@ set(CMAKE_AUTOUIC ON) # User Interface Compiler
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_definitions(-DAPP_VERSION="${APP_VERSION}")
+
+message(STATUS "APP_VERSION: ${APP_VERSION}")
+
 if(NOT DEFINED CMAKE_PREFIX_PATH)
 set(CMAKE_PREFIX_PATH "/Users/jg/Qt6/6.5.0/macos/lib/cmake/")
 endif()
