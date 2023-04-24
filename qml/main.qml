@@ -16,11 +16,31 @@ Window {
     minimumWidth:400
     title: qsTr("GPT Translator")
 
+    property Component  popComponent: null
+    property QtObject  popW: null
+
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
+
+    function popWindow(){
+        if(popComponent !== null){
+             popW.close()
+             popComponent.destroy()
+        }
+        popComponent = Qt.createComponent("GPopWindow.qml")
+        popW = popComponent.createObject(mainWindow)
+        var point = mapToItem(null, mouseX, mouseY)
+        popW.x = point.x + mainWindow.x
+        popW.y = point.y + mainWindow.y
+        popW.show()
+    }
 
     MouseArea{
        anchors.fill: parent
        property variant clickPos: "1,1"
+       onClicked: {
+
+
+       }
 
        onPressed: {
            clickPos  = Qt.point(mouseX ,mouseY)
@@ -32,6 +52,20 @@ Window {
            mainWindow.y += delta.y;
        }
    }
+
+    onActiveChanged: {
+//        if(active){
+//            mainWindow.visible = true
+//        }else{
+//            if(!appView.pinned)
+//            mainWindow.visible = false
+//        }
+    }
+
+
+
+
+
     Item{
         anchors.fill: parent
         focus: true
@@ -63,7 +97,13 @@ Window {
                 mainWindow.show()
                 mainWindow.raise()
                 mainWindow.requestActivate()
+
+//                mainWindow.x = trayIcon.geometry.x - mainWindow.width/2
+//                mainWindow.y = trayIcon.geometry.y + 50
+//                mainWindow.visible = true
             }
+
+
         }
 
         SwipeView {
@@ -88,6 +128,7 @@ Window {
             }
         }
     }
+
 
 
 }

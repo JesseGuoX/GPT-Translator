@@ -9,6 +9,7 @@ import "."
 
 Item {
     id:root
+    property bool pinned: false
     signal settingClicked;
     function startTrans(){
         if(inputArea.text.length > 0 && transBtn.visible)
@@ -153,6 +154,7 @@ Item {
                 onClicked: {
                     mainWindow.flags = mainWindow.flags & (0xFFFFFFFF ^ Qt.WindowStaysOnTopHint)
                     tItem.state = "no"
+                    pinned = false
 
                 }
             }
@@ -167,6 +169,7 @@ Item {
                 onClicked: {
                     mainWindow.flags = mainWindow.flags |Qt.WindowStaysOnTopHint
                     tItem.state = "yes"
+                    pinned = true
 
                 }
             }

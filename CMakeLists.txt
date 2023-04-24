@@ -40,6 +40,7 @@ set(RESOURCES
     GPT_Translator.qrc
 )
 
+add_subdirectory(lib/)
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
@@ -66,7 +67,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin")
-
+    find_library( APP_SERVICES_LIBRARY ApplicationServices )
 
     set(MACOSX_BUNDLE_ICON_FILE logo.icns)
     # And the following tells CMake where to find and install the file itself.
@@ -99,12 +100,14 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
         )
     else()
     target_link_libraries(GPT_Translator
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
         )
     endif()
 ELSE()
@@ -112,6 +115,8 @@ ELSE()
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
+        ${APP_SERVICES_LIBRARY}
         )
 ENDIF()
 
