@@ -6,6 +6,7 @@ import Qt.labs.platform
 
 import "."
 
+import Controller
 
 Window {
     id: mainWindow
@@ -21,25 +22,48 @@ Window {
 
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
 
-    function popWindow(){
+    function popWindow(t){
         if(popComponent !== null){
              popW.close()
              popComponent.destroy()
         }
         popComponent = Qt.createComponent("GPopWindow.qml")
         popW = popComponent.createObject(mainWindow)
-        var point = mapToItem(null, mouseX, mouseY)
+//        popW.text = t
+        var point = mouseArea.mapToItem(null, mouseArea.mouseX, mouseArea.mouseY)
         popW.x = point.x + mainWindow.x
         popW.y = point.y + mainWindow.y
+        console.log(popW.x, popW.y)
         popW.show()
+    }
+    Hotkey{
+       id:hotkey
+       onSelectedTextChanged: {
+            popWindow(selectedText)
+       }
+
+    }
+
+    Component.onCompleted: {
+        hotkey.binding(app)
     }
 
     MouseArea{
+        id:mouseArea
        anchors.fill: parent
        property variant clickPos: "1,1"
        onClicked: {
 
-
+//           if(popComponent !== null){
+//                popW.close()
+//                popComponent.destroy()
+//           }
+//           popComponent = Qt.createComponent("GPopWindow.qml")
+//           popW = popComponent.createObject(mainWindow)
+//           var point = mapToItem(null, mouseX, mouseY)
+//           popW.x = point.x + mainWindow.x
+//           popW.y = point.y + mainWindow.y
+//           popW.show()
        }
 
        onPressed: {

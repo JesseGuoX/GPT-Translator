@@ -14,18 +14,7 @@
 #include "updater.h"
 #include <QIcon>
 
-#include <QHotkey>
-#include <QKeyEvent>
-#include <QTimer>
-
-#include <QShortcut>
-
-#include <QProcess>
-
-#ifdef Q_OS_MAC
-#include <ApplicationServices/ApplicationServices.h>
-#endif
-
+#include "hotkey.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,31 +38,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     app.setWindowIcon(QIcon("qrc:///res/logo/logo.ico"));
 
-    QHotkey hotkey(QKeySequence("F1"), true, &app); //The hotkey will be automatically registered
-    qDebug() << "Is segistered:" << hotkey.isRegistered();
-
-
-    QObject::connect(&hotkey, &QHotkey::activated, qApp, [&](){
-        qDebug() << "Hotkey Activated ";
-
-#ifdef Q_OS_MAC
-            CGEventRef push = CGEventCreateKeyboardEvent(NULL, 0x08, true);//0x08=='c'
-            CGEventSetFlags(push, kCGEventFlagMaskCommand);
-            CGEventPost(kCGHIDEventTap, push);
-
-            push = CGEventCreateKeyboardEvent(NULL, 0x08, false);//0x08=='c'
-            CGEventSetFlags(push, kCGEventFlagMaskCommand);
-            CGEventPost(kCGHIDEventTap, push);
-#endif
-            // Use a timer to wait for the copy operation to complete
-            QTimer::singleShot(300,  [] {
-                QClipboard *clipboard = QGuiApplication::clipboard();
-                QString copiedText = clipboard->text();
-                qDebug() << "Copied text:" << copiedText;
-
-            });
-
-    });
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -92,15 +56,19 @@ int main(int argc, char *argv[])
     #endif
 
     Setting * setting = new Setting();
-
+//    Hotkey *key = new Hotkey();
+//    key->binding(&app);
 
     qmlRegisterType<Controller>("Controller",1,0,"APIController");
     qmlRegisterType<Updater>("Updater",1,0,"APIUpdater");
+    qmlRegisterType<Hotkey>("Controller",1,0,"Hotkey");
 
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:///qml/main.qml"_qs);
     engine.rootContext()->setContextProperty("setting", setting);
+    engine.rootContext()->setContextProperty("app", &app);
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

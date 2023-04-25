@@ -8,6 +8,8 @@ Window {
     width:100
     color:"green"
 
+    property string text: text.text
+
     MouseArea{
        anchors.fill: parent
        property variant clickPos: "1,1"
@@ -21,4 +23,9 @@ Window {
            popWindow.y += delta.y;
        }
    }
+    Text{
+        id:text
+        anchors.fill: parent
+
+    }
 }

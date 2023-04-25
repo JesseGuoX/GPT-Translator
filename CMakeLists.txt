@@ -29,11 +29,13 @@ set(HEADERS
     src/controller.h
     src/stdafx.h
     src/updater.h
+    src/hotkey.h
 )
 set(SOURCES
-    "src/main.cpp"
-    "src/controller.cpp"
-    "src/updater.cpp"
+    src/main.cpp
+    src/controller.cpp
+    src/updater.cpp
+    src/hotkey.cpp
 )
 
 set(RESOURCES
