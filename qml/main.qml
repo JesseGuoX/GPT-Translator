@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Controls
-
+import QtQuick.Window
 import QtQuick.Layouts
 import Qt.labs.platform
 
 import "."
 
 import Controller
+
 
 Window {
     id: mainWindow
@@ -20,26 +21,43 @@ Window {
     property Component  popComponent: null
     property QtObject  popW: null
 
+
 //    flags:Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
 
-    function popWindow(t){
+    function popWindow(t, pos){
+
         if(popComponent !== null){
-             popW.close()
+            popW.close()
              popComponent.destroy()
         }
+
         popComponent = Qt.createComponent("GPopWindow.qml")
-        popW = popComponent.createObject(mainWindow)
-//        popW.text = t
-        var point = mouseArea.mapToItem(null, mouseArea.mouseX, mouseArea.mouseY)
-        popW.x = point.x + mainWindow.x
-        popW.y = point.y + mainWindow.y
-        console.log(popW.x, popW.y)
-        popW.show()
+        if (popComponent.status === Component.Ready) {
+            popW = popComponent.createObject(mainWindow)
+            if (popW) {
+                popW.x = pos.x
+                popW.y = pos.y
+                popW.visible = true
+                popW.show()
+                popW.raise()
+                popW.requestActivate()
+                mainWindow.visible = false
+            } else {
+                console.error("Error creating new window:", popComponent.errorString())
+            }
+        } else {
+            console.error("Error loading DynamicWindow component:", popComponent.errorString())
+        }
+
     }
     Hotkey{
        id:hotkey
        onSelectedTextChanged: {
-            popWindow(selectedText)
+//            popWindow(selectedText, mousePos)
+           appView.inputText = selectedText
+           appView.startTrans()
+           mainWindow.show()
+           mainWindow.raise()
        }
 
     }
@@ -54,16 +72,6 @@ Window {
        property variant clickPos: "1,1"
        onClicked: {
 
-//           if(popComponent !== null){
-//                popW.close()
-//                popComponent.destroy()
-//           }
-//           popComponent = Qt.createComponent("GPopWindow.qml")
-//           popW = popComponent.createObject(mainWindow)
-//           var point = mapToItem(null, mouseX, mouseY)
-//           popW.x = point.x + mainWindow.x
-//           popW.y = point.y + mainWindow.y
-//           popW.show()
        }
 
        onPressed: {

@@ -19,6 +19,8 @@ class Hotkey : public QObject
 {
     Q_OBJECT
     Q_PROPERTY_AUTO(QString,selectedText);
+    Q_PROPERTY_AUTO(QPoint,mousePos);
+
 public:
     explicit Hotkey(QObject *parent = nullptr);
 
