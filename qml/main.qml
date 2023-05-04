@@ -62,8 +62,11 @@ Window {
 
     }
 
+
+
     Component.onCompleted: {
         hotkey.binding(app)
+        hotkey.setShortcut(setting.shortCut)
     }
 
     MouseArea{
@@ -102,11 +105,11 @@ Window {
         anchors.fill: parent
         focus: true
         Keys.onPressed:(event)=> {
-           if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_R ||
-                   (event.modifiers & Qt.MetaModifier) && event.key === Qt.Key_R) {
-                  // Command+R or Ctrl+R pressed
-                appView.startTrans()
-              }
+            if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_R ||
+               (event.modifiers & Qt.MetaModifier) && event.key === Qt.Key_R) {
+              // Command+R or Ctrl+R pressed
+            appView.startTrans()
+            }
         }
 
         SystemTrayIcon {

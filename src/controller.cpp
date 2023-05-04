@@ -7,6 +7,7 @@ Setting::Setting(QObject * parent): QObject{parent}
     _apiServer = "";
     _apiKey = "";
     _model = "";
+    _shortCut = "";
     //win C:\Users\xxxx\AppData\Local\GPT_Translator
     //macos /Users/xxx/Library/Preferences/GPT_Translator/
     _configPath = QStandardPaths::locate(QStandardPaths::AppConfigLocation, "config.json", QStandardPaths::LocateFile);
@@ -51,6 +52,7 @@ bool Setting::loadConfig()
             _apiKey = obj.value("apiKey").toString();
             _model = obj.value("model").toString();
             _apiServer = obj.value("apiServer").toString();
+            _shortCut = obj.value("shortCut").toString();
             if(_apiServer.trimmed().length() == 0){
                 _apiServer = "https://api.openai.com";
             }
@@ -62,7 +64,7 @@ bool Setting::loadConfig()
 
 void Setting::updateConfig()
 {
-    QString s = "{\"apiKey\":\"" + _apiKey + "\",\"model\":\"" + _model + "\", \"apiServer\":\"" + _apiServer + "\"}";
+    QString s = "{\"apiKey\":\"" + _apiKey + "\",\"model\":\"" + _model + "\", \"apiServer\":\"" + _apiServer + "\", \"shortCut\":\"" + _shortCut + "\"}";
     QFile file(_configPath);
     if(file.open(QIODevice::WriteOnly)){
         QTextStream out(&file);
@@ -158,7 +160,7 @@ void Controller::sendMessage(QString str, int mode)
     QUrl apiUrl(_apiServer + "/v1/chat/completions");
       QNetworkRequest request(apiUrl);
       request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-      request.setRawHeader("Authorization", QString::fromStdString("Bearer %1").arg(_apiKey).toUtf8());
+      request.setRawHeader("Authorization", QString::fromStdString("Bearer %1").arg(_apiKey.trimmed()).toUtf8());
       request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork); // Events shouldn't be cached
 
       QJsonObject requestData;

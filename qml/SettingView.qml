@@ -10,6 +10,7 @@ Item {
         setting.loadConfig()
         keyInput.text = setting.apiKey
         serverInput.text = setting.apiServer
+        shortcutText.text = setting.shortCut
         if(setting.model == "gpt-3.5-turbo")
             modelSelector.currentIndex = 0
         else if(setting.model == "gpt-4")
@@ -17,6 +18,18 @@ Item {
         
         saveBtn.visible = false
     }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            shortcutRect.focus = false;
+            if(shortcutText.text.length > 0){
+                console.log("setshorcut:" + shortcutText.text)
+                hotkey.setShortcut(shortcutText.text)
+            }
+        }
+    }
+
 
 
 
@@ -57,12 +70,18 @@ Item {
             onClicked: {
                 setting.apiServer = serverInput.text.trim()
                 setting.apiKey = keyInput.text
+                setting.shortCut = shortcutText.text
                 if(modelSelector.currentIndex == 0)
                     setting.model = "gpt-3.5-turbo"
                 else
                     setting.model = "gpt-4"
                 setting.updateConfig()
                 visible = false
+            }
+            onVisibleChanged: {
+                if(visible){
+                    saveBtn.clicked()
+                }
             }
         }
 
@@ -166,12 +185,115 @@ Item {
         height:40
     }
 
+    Text{
+        id:shortCutText
+        anchors.left: header.left
+        anchors.top:modelSelector.bottom
+        anchors.topMargin: 20
+        text:"Shortcut"
+        font.bold: true
+        color:"green"
+    }
+
+    Item {
+        id:shortcutItem
+        anchors.left: header.left
+        anchors.top:shortCutText.bottom
+        anchors.topMargin: 10
+        width:100
+        height:30
+        Rectangle {
+            id:shortcutRect
+            color: "#E6E7E7"
+            anchors.fill: parent
+            radius: 5
+            border.width:1
+            border.color: color
+            onActiveFocusChanged: {
+                console.log("afocus")
+            }
+
+            onFocusChanged: {
+                if(focus){
+                    border.color = "green"
+                    shortcutRect.forceActiveFocus()
+                }else{
+                    border.color = color
+                }
+                console.log("foucu")
+            }
+
+            Text{
+                id:shortcutText
+                anchors.centerIn: parent
+                text:""
+                onTextChanged: {
+                    saveBtn.visible = true
+                }
+            }
+
+            Keys.onPressed:(event)=> {
+                if(!shortcutRect.focus){
+                    return
+                }
+
+                shortcutText.text = ""
+
+
+
+                if(Qt.platform.os === "macos" || Qt.platform.os === "osx"){
+                   if (event.modifiers & Qt.ControlModifier) {
+                       shortcutText.text = "Ctrl+"
+                   }
+                   if (event.modifiers & Qt.MetaModifier) {
+                       shortcutText.text = "Meta+"
+                   }
+                }else{
+                   if (event.modifiers & Qt.ControlModifier) {
+                       shortcutText.text = "Ctrl+"
+                   }
+                }
+
+                if (event.modifiers & Qt.AltModifier) {
+                   shortcutText.text = "Alt+"
+                }
+
+                if(shortCutText.text.length > 0){
+                    switch(event.key){
+                        case Qt.Key_F1: shortcutText.text = "F1"; break;
+                        case Qt.Key_F2: shortcutText.text = "F2"; break;
+                        case Qt.Key_F3: shortcutText.text = "F3"; break;
+                        case Qt.Key_F4: shortcutText.text = "F4"; break;
+                        case Qt.Key_F5: shortcutText.text = "F5"; break;
+                        case Qt.Key_F6: shortcutText.text = "F6"; break;
+                        case Qt.Key_F7: shortcutText.text = "F7"; break;
+                        case Qt.Key_F8: shortcutText.text = "F8"; break;
+                        case Qt.Key_F9: shortcutText.text = "F9"; break;
+                        case Qt.Key_F10: shortcutText.text = "F10"; break;
+                        case Qt.Key_F11: shortcutText.text = "F11"; break;
+                        case Qt.Key_F12: shortcutText.text = "F12"; break;
+                    }
+                }
+            }
+
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                shortcutRect.focus = true
+            }
+        }
+
+
+
+    }
 
 
     Text{
         id:about
         anchors.left: header.left
-        anchors.top:modelSelector.bottom
+        anchors.top:shortcutItem.bottom
         anchors.topMargin: 20
         text:"About"
         font.bold: true

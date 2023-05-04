@@ -1,3 +1,9 @@
+/*
+ * @Date: 2023-05-02 23:52:58
+ * @LastEditors: JessGuo
+ * @LastEditTime: 2023-05-04 23:52:52
+ * @FilePath: /GPT_Translator/src/hotkey.cpp
+ */
 #include "hotkey.h"
 
 Hotkey::Hotkey(QObject *parent)
@@ -8,7 +14,7 @@ Hotkey::Hotkey(QObject *parent)
 
 void Hotkey::binding(QObject *obj)
 {
-    _hotkey = new QHotkey(QKeySequence("F2"), true, obj); //The hotkey will be automatically registered
+    _hotkey = new QHotkey(QKeySequence(""), true, obj); //The hotkey will be automatically registered
     qDebug() << "Is segistered:" << _hotkey->isRegistered();
 
 
