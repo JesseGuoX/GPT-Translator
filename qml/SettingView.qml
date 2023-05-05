@@ -6,8 +6,13 @@ import Controller
 Item {
     signal backClicked;
 
+    
+    property bool lock:false
+    
+
     function reload(){
         setting.loadConfig()
+        lock = true
         keyInput.text = setting.apiKey
         serverInput.text = setting.apiServer
         shortcutText.text = setting.shortCut
@@ -16,20 +21,32 @@ Item {
         else if(setting.model == "gpt-4")
             modelSelector.currentIndex = 1
         
-        saveBtn.visible = false
+        lock = false
+
     }
 
+    function saveConfig(){
+        if(lock){
+            return
+        }
+        setting.apiServer = serverInput.text.trim()
+        setting.apiKey = keyInput.text
+            setting.shortCut = shortcutText.text
+            if(modelSelector.currentIndex == 0)
+                setting.model = "gpt-3.5-turbo"
+            else
+                setting.model = "gpt-4"
+            setting.updateConfig()
+    }
     MouseArea {
         anchors.fill: parent
         onClicked: {
             shortcutRect.focus = false;
             if(shortcutText.text.length > 0){
-                console.log("setshorcut:" + shortcutText.text)
                 hotkey.setShortcut(shortcutText.text)
             }
         }
     }
-
 
 
 
@@ -52,36 +69,6 @@ Item {
             pressedUrl:"qrc:///res/back2.png"
             onClicked: {
                 backClicked();
-            }
-        }
-
-
-
-        IconButton{
-            id:saveBtn
-            width: 17.5
-            height:20
-            visible:false
-            anchors.right: parent.right
-            anchors.top: parent.top
-            normalUrl:"qrc:///res/save1.png"
-            hoveredUrl:"qrc:///res/save1.png"
-            pressedUrl:"qrc:///res/save2.png"
-            onClicked: {
-                setting.apiServer = serverInput.text.trim()
-                setting.apiKey = keyInput.text
-                setting.shortCut = shortcutText.text
-                if(modelSelector.currentIndex == 0)
-                    setting.model = "gpt-3.5-turbo"
-                else
-                    setting.model = "gpt-4"
-                setting.updateConfig()
-                visible = false
-            }
-            onVisibleChanged: {
-                if(visible){
-                    saveBtn.clicked()
-                }
             }
         }
 
@@ -115,7 +102,7 @@ Item {
             padding:7
             text: "https://api.openai.com"
             onTextChanged: {
-                saveBtn.visible = true
+                saveConfig()
             }
         }
     }
@@ -152,7 +139,7 @@ Item {
             y:20
             wrapMode: Text.WrapAnywhere
             onTextChanged:{
-               saveBtn.visible = true
+                saveConfig()
             }
             background: Rectangle{
                 color: "#E6E7E7"
@@ -180,7 +167,7 @@ Item {
         currentIndex: 0
         model:["GPT-3.5", "GPT-4"]
         onCurrentIndexChanged:{
-            saveBtn.visible = true
+            saveConfig()
         }
         height:40
     }
@@ -210,17 +197,18 @@ Item {
             border.width:1
             border.color: color
             onActiveFocusChanged: {
-                console.log("afocus")
             }
 
             onFocusChanged: {
                 if(focus){
                     border.color = "green"
                     shortcutRect.forceActiveFocus()
+                    shortcutText.text = ""
+                    hotkey.setShortcut("")
                 }else{
                     border.color = color
                 }
-                console.log("foucu")
+
             }
 
             Text{
@@ -228,7 +216,7 @@ Item {
                 anchors.centerIn: parent
                 text:""
                 onTextChanged: {
-                    saveBtn.visible = true
+                    saveConfig()
                 }
             }
 
@@ -238,42 +226,71 @@ Item {
                 }
 
                 shortcutText.text = ""
-
+                var vaild = false
+                var haveCtrl = false
 
 
                 if(Qt.platform.os === "macos" || Qt.platform.os === "osx"){
                    if (event.modifiers & Qt.ControlModifier) {
                        shortcutText.text = "Ctrl+"
+                       haveCtrl = true
                    }
                    if (event.modifiers & Qt.MetaModifier) {
                        shortcutText.text = "Meta+"
+                       haveCtrl = true
                    }
                 }else{
                    if (event.modifiers & Qt.ControlModifier) {
                        shortcutText.text = "Ctrl+"
+                       haveCtrl = true
                    }
                 }
 
                 if (event.modifiers & Qt.AltModifier) {
                    shortcutText.text = "Alt+"
+                    haveCtrl = true
+                }
+                if (event.modifiers & Qt.ShiftModifier) {
+                   shortcutText.text = "Shift+"
+                    haveCtrl = true
                 }
 
                 if(shortCutText.text.length > 0){
                     switch(event.key){
-                        case Qt.Key_F1: shortcutText.text = "F1"; break;
-                        case Qt.Key_F2: shortcutText.text = "F2"; break;
-                        case Qt.Key_F3: shortcutText.text = "F3"; break;
-                        case Qt.Key_F4: shortcutText.text = "F4"; break;
-                        case Qt.Key_F5: shortcutText.text = "F5"; break;
-                        case Qt.Key_F6: shortcutText.text = "F6"; break;
-                        case Qt.Key_F7: shortcutText.text = "F7"; break;
-                        case Qt.Key_F8: shortcutText.text = "F8"; break;
-                        case Qt.Key_F9: shortcutText.text = "F9"; break;
-                        case Qt.Key_F10: shortcutText.text = "F10"; break;
-                        case Qt.Key_F11: shortcutText.text = "F11"; break;
-                        case Qt.Key_F12: shortcutText.text = "F12"; break;
+                        case Qt.Key_F1: shortcutText.text = "F1"; vaild = true; break;
+                        case Qt.Key_F2: shortcutText.text = "F2";vaild = true; break;
+                        case Qt.Key_F3: shortcutText.text = "F3";vaild = true;  break;
+                        case Qt.Key_F4: shortcutText.text = "F4"; vaild = true; break;
+                        case Qt.Key_F5: shortcutText.text = "F5"; vaild = true; break;
+                        case Qt.Key_F6: shortcutText.text = "F6";vaild = true;  break;
+                        case Qt.Key_F7: shortcutText.text = "F7"; vaild = true; break;
+                        case Qt.Key_F8: shortcutText.text = "F8"; vaild = true; break;
+                        case Qt.Key_F9: shortcutText.text = "F9"; vaild = true; break;
+                        case Qt.Key_F10: shortcutText.text = "F10"; vaild = true; break;
+                        case Qt.Key_F11: shortcutText.text = "F11"; vaild = true; break;
+                        case Qt.Key_F12: shortcutText.text = "F12"; vaild = true; break;
+                    }
+                    if(event.key >= Qt.Key_0  && event.key <= Qt.Key_9 ){
+                        if(haveCtrl){
+                            shortcutText.text += String.fromCharCode(event.key)
+                            vaild = true
+                        }
+                    }else if(event.key >= Qt.Key_A  && event.key <= Qt.Key_Z ){
+                        if(haveCtrl){
+                            shortcutText.text += String.fromCharCode(event.key)
+                            vaild = true
+                        }
                     }
                 }
+
+                if(vaild){
+                    shortcutRect.focus = false;
+                    if(shortcutText.text.length > 0){
+                        hotkey.setShortcut(shortcutText.text)
+                    }
+                }
+
+
             }
 
         }
