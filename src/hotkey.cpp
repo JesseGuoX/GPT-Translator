@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-02 23:52:58
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-05-05 22:03:21
+ * @LastEditTime: 2023-05-05 22:34:50
  * @FilePath: /GPT_Translator/src/hotkey.cpp
  */
 #include "hotkey.h"
@@ -90,26 +90,26 @@ void Hotkey::binding(QObject *obj)
         event.xkey.keycode = ctrl_key;
         XSendEvent(display, root, True, KeyPressMask, &event);
         XFlush(display);
-        usleep(1000);
+        usleep(10000);
 
         // 按下 C 键
         event.xkey.keycode = c_key;
         XSendEvent(display, root, True, KeyPressMask, &event);
         XFlush(display);
-        usleep(1000);
+        usleep(10000);
 
         // 释放 C 键
         event.xkey.type = KeyRelease;
         event.xkey.keycode = c_key;
         XSendEvent(display, root, True, KeyReleaseMask, &event);
         XFlush(display);
-        usleep(1000);
+        usleep(10000);
 
         // 释放 Ctrl 键
         event.xkey.keycode = ctrl_key;
         XSendEvent(display, root, True, KeyReleaseMask, &event);
         XFlush(display);
-        usleep(1000);
+        usleep(10000);
 
         XCloseDisplay(display);
 #endif
