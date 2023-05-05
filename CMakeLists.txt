@@ -116,7 +116,7 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         )
     endif()
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    target_include_directories(send_ctrl_c_project PRIVATE ${X11_INCLUDE_DIR})
+    target_include_directories(GPT_Translator PRIVATE ${X11_INCLUDE_DIR})
 
     target_link_libraries(GPT_Translator
         PRIVATE
