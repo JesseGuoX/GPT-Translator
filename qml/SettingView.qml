@@ -286,7 +286,10 @@ Item {
                 if(vaild){
                     shortcutRect.focus = false;
                     if(shortcutText.text.length > 0){
-                        hotkey.setShortcut(shortcutText.text)
+                        if(hotkey.setShortcut(shortcutText.text) == false){
+                            shortcutRect.focus = false;
+                            shortcutText.text = ""
+                        }
                     }
                 }
 

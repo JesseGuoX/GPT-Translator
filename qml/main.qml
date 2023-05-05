@@ -58,6 +58,8 @@ Window {
            appView.startTrans()
            mainWindow.show()
            mainWindow.raise()
+           mainWindow.requestActivate()
+
        }
 
     }

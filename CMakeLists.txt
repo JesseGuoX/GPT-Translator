@@ -47,6 +47,7 @@ add_subdirectory(lib/)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
+    find_package(X11 REQUIRED)
 
     qt_add_executable(GPT_Translator
         ${SOURCES} ${HEADERS} ${RESOURCES}
@@ -103,6 +104,7 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         Qt6::Quick
         Qt6::TextToSpeech
         qhotkey
+        user32
         )
     else()
     target_link_libraries(GPT_Translator
@@ -110,9 +112,21 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         Qt6::Quick
         Qt6::TextToSpeech
         qhotkey
+        user32
         )
     endif()
-ELSE()
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_include_directories(send_ctrl_c_project PRIVATE ${X11_INCLUDE_DIR})
+
+    target_link_libraries(GPT_Translator
+        PRIVATE
+        Qt6::Quick
+        Qt6::TextToSpeech
+        qhotkey
+        ${X11_LIBRARIES}
+        )
+
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     target_link_libraries(GPT_Translator
         PRIVATE
         Qt6::Quick

@@ -11,9 +11,7 @@
 #include <QGuiApplication>
 #include <QClipboard>
 
-#ifdef Q_OS_MAC
-#include <ApplicationServices/ApplicationServices.h>
-#endif
+
 
 class Hotkey : public QObject
 {
