@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-04-10 19:41:40
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-13 23:36:42
+ * @LastEditTime: 2023-05-05 22:49:23
  * @FilePath: /GPT_Translator/README_zh.md
 -->
 
@@ -38,7 +38,7 @@
 
 <p align="center">
   <a  target="_blank">
-    <img alt="logo" width="512px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
+    <img alt="logo" width="800px" src="https://raw.githubusercontent.com/JesseGuoX/GPT-Translator/master/doc/screenshot.png" />
   </a>
 </p>
 
