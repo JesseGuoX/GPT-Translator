@@ -23,5 +23,7 @@
         <file>res/speak1.png</file>
         <file>res/speak2.png</file>
         <file>res/tray.png</file>
+        <file>qml/GPopWindow.qml</file>
+        <file>res/icon.png</file>
     </qresource>
 </RCC>

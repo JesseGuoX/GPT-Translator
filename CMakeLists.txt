@@ -29,21 +29,25 @@ set(HEADERS
     src/controller.h
     src/stdafx.h
     src/updater.h
+    src/hotkey.h
 )
 set(SOURCES
-    "src/main.cpp"
-    "src/controller.cpp"
-    "src/updater.cpp"
+    src/main.cpp
+    src/controller.cpp
+    src/updater.cpp
+    src/hotkey.cpp
 )
 
 set(RESOURCES
     GPT_Translator.qrc
 )
 
+add_subdirectory(lib/)
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
+    find_package(X11 REQUIRED)
 
     qt_add_executable(GPT_Translator
         ${SOURCES} ${HEADERS} ${RESOURCES}
@@ -66,7 +70,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin")
-
+    find_library( APP_SERVICES_LIBRARY ApplicationServices )
 
     set(MACOSX_BUNDLE_ICON_FILE logo.icns)
     # And the following tells CMake where to find and install the file itself.
@@ -99,19 +103,36 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
+        user32
         )
     else()
     target_link_libraries(GPT_Translator
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
+        user32
         )
     endif()
-ELSE()
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_include_directories(GPT_Translator PRIVATE ${X11_INCLUDE_DIR})
+
     target_link_libraries(GPT_Translator
         PRIVATE
         Qt6::Quick
         Qt6::TextToSpeech
+        qhotkey
+        ${X11_LIBRARIES}
+        )
+
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    target_link_libraries(GPT_Translator
+        PRIVATE
+        Qt6::Quick
+        Qt6::TextToSpeech
+        qhotkey
+        ${APP_SERVICES_LIBRARY}
         )
 ENDIF()
 

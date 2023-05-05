@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-07 15:38:00
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-04-07 15:54:06
+ * @LastEditTime: 2023-05-04 23:49:11
  * @FilePath: /GPT_Translator/src/controller.h
  */
 #ifndef CONTROLLER_H
@@ -31,6 +31,7 @@ class Setting : public QObject
     Q_PROPERTY_AUTO(QString,apiServer);
     Q_PROPERTY_AUTO(QString,apiKey);
     Q_PROPERTY_AUTO(QString,model);
+    Q_PROPERTY_AUTO(QString,shortCut);
 public:
     explicit Setting(QObject *parent = nullptr);
     Q_INVOKABLE bool loadConfig();
