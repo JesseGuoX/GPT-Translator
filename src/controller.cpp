@@ -170,9 +170,9 @@ void Controller::sendMessage(QString str, int mode)
 //      qDebug() << _transToLang;
       QString systemcmd;
       if(mode == 0){
-        systemcmd = QString::fromStdString("Translate anything that I say to %1. Only return the translate result, don’t interpret it.").arg(_transToLang);
+        systemcmd = QString::fromStdString("Translate the text to %1, which is delimited with triple backticks. Only return the translate result, don’t interpret it, don't return the delimited character.").arg(_transToLang);
         messages.append(createMessage("system",systemcmd));
-        messages.append(createMessage("user", str ));
+        messages.append(createMessage("user", "translate text:'''" + str + "'''" ));
       }else if(mode == 1){
           systemcmd = QString::fromStdString("Translate anything that I say to %1. When the text contains only one single word, please provide the original form (if applicable), \
   the language of the word, the corresponding phonetic transcription (if applicable), \
