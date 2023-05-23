@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-02 23:52:58
  * @LastEditors: JessGuo
- * @LastEditTime: 2023-05-05 22:34:50
+ * @LastEditTime: 2023-05-23 23:25:44
  * @FilePath: /GPT_Translator/src/hotkey.cpp
  */
 #include "hotkey.h"
@@ -114,7 +114,7 @@ void Hotkey::binding(QObject *obj)
         XCloseDisplay(display);
 #endif
             // Use a timer to wait for the copy operation to complete
-            QTimer::singleShot(200,  [this] {
+            QTimer::singleShot(300,  [this] {
                 QClipboard *clipboard = QGuiApplication::clipboard();
                 QString copiedText = clipboard->text();
                 qDebug() << "Copied text:" << copiedText;
